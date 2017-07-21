@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>map</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="map" style="width: 1500px;height: 1500px;margin: 0 auto;"></div>
+	<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+	<script src="js/echarts/echarts.js"></script>
+  	<script src="js/index.js"></script>
+  	<script type="text/javascript">
+  	var area = "350100";
+	$(window).load(function(){
+		$.get('js/echarts/map/json/'+area+'.json', function (mapJson) {
+		    echarts.registerMap(area, mapJson);
+		    var chart = echarts.init(document.getElementById('map'));
+		    var option = {
+		        series: [{
+		        	name: 'maps',
+		            type: 'map',
+		            map: area,
+		            selectedMode : 'single',
+		            layoutCenter: ['50%', '50%'],
+					layoutSize: '100%',
+		            itemStyle: itemStyleInactive/*,
+				    //data: mapData,
+				    nameMap:{
+				    	"宁德市":"宁德\n\n\n\n",
+				    	"福州市":"福州",
+				    	"莆田市":"莆田",
+				    	"泉州市":"泉州",
+				    	"厦门市":"厦门",
+				    	"漳州市":"漳州",
+				    	"龙岩市":"龙岩",
+				    	"三明市":"三明",
+				    	"南平市":"南平"
+				    }*/
+
+		        }]
+		    }
+		    chart.setOption(option);
+		    chart.on('mapselectchanged',function(data){
+		    	console.log(data);
+		    });
+		    //window.onresize = chart.resize;
+		});
+
+	});
+	</script>
+</body>
+</html>
