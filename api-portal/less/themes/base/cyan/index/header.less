@@ -1,0 +1,32 @@
+#index{
+	header{
+		background: @main-color;
+		.logo{
+			line-height: 48px;
+			font-size: @font-size-h2;
+		  color: @white;
+		}
+		nav ul{
+			margin: 0;
+		}
+		nav li{
+			float: left;
+			width: 100px;
+			text-align: center;
+			a{
+				display: block;
+				padding: 14px 0;
+				color: @gray-200;
+			}
+			&:hover a{
+				color: @white;
+			}
+			&.active a{
+				background: @main-color-light;
+			}
+			&.active:hover a{
+				color: @white;
+			}
+		}
+	}
+}

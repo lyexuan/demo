@@ -1,0 +1,40 @@
+.yx-main-page{
+  /* header */
+  .header{
+    height: @yx-header-height;
+  	background: @main-color-dark;
+    position: relative;
+    z-index: 900;
+    .logo{
+      height: @yx-header-height;
+    	line-height: @yx-header-height;
+    	padding: 0 14px;
+    	color: @white;
+      font-size: @font-size-h3;
+    }
+    .user-panel{
+      position: absolute;
+      top: @btn-header-width + 4;
+      right: 0;
+      max-height: 0;
+      overflow: hidden;
+    }
+  }
+  .btn-header{
+    position: relative;
+    display: inline-block;
+    width: @btn-header-width;
+    height: @btn-header-width;
+    line-height: @btn-header-width;
+    text-align: center;
+    background: @main-color;
+    color: @white;
+    margin-top: 10px;
+    &:hover{
+      background: @main-color-light;
+      .user-panel{
+        max-height: 300px;
+      }
+    }
+  }
+}

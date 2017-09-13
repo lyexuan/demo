@@ -1,0 +1,33 @@
+.treegrid-indent {
+  width:16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+}
+.treegrid-expander {
+  width:16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  top: 1px;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 5px;
+}
+.treegrid-expander:before{
+	content: "\e022";
+	color: @brand-primary;
+}
+.treegrid-expander-expanded:before{
+	content: "\e118";
+	color: @brand-primary;
+}
+.treegrid-expander-collapsed:before{
+	content: "\e117";
+	color: @brand-primary;
+}

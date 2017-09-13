@@ -1,0 +1,55 @@
+.yx-part-panel-user{
+  width: 260px;
+  background: @white;
+  color: @font-color;
+  text-align: left;
+  position: relative;
+  margin-top: 10px;
+  &:before{
+    content:"";
+    position: absolute;
+    top: -20px;
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent @gray-300 transparent;
+  }
+  .yx-part-header{
+    background: @gray-300;
+    color: @main-color;
+    padding: @spacing-small;
+    i{
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border-radius: 50%;
+      background: @main-color-dark;
+      color: @white;
+      font-size: @font-size-h3;
+    }
+    span{
+      padding-left: @spacing-mini;
+    }
+  }
+  .yx-part-body{
+    padding: @spacing-mini @spacing-small;
+    .user-ctrls{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li{
+        line-height: @spacing-big;
+        &+li{
+          border-top: 1px solid @gray-300;
+        }
+        i{
+          padding-right: @spacing-mini;
+        }
+      }
+    }
+  }
+}

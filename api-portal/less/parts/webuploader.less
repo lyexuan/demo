@@ -1,0 +1,82 @@
+.webuploader-container {
+	position: relative;
+  height: 34px;
+	display: inline-block;
+  vertical-align: middle;
+}
+.webuploader-container label{
+	margin-bottom: 0;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background: @brand-primary;
+	padding: 6px 12px;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+	overflow: hidden;
+  border: 1px solid @btn-primary-border;
+}
+.webuploader-pick-hover {
+	background: darken(@brand-primary, 10%);
+  border: 1px solid darken(@btn-primary-border, 12%);
+}
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+
+.yx-uploader-area{
+  max-width: 600px;
+  padding: @font-size-base;
+  background: @gray-200;
+}
+.yx-uploader-tips{
+  color: @font-color-middle;
+}
+.yx-uploader-files ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li{
+    position: relative;
+    padding-top: @font-size-base;
+    padding-right: 60px;
+    &+li{
+      border-top: 1px solid @gray-300;
+    }
+  }
+}
+.yx-uploader-file-name span,
+.yx-uploader-status span{
+  padding-left: @spacing-mini;
+}
+.yx-uploader-file-ctrl{
+  position: absolute;
+  right: @font-size-base;
+  top: @font-size-base;
+  span{
+    cursor: pointer;
+    display: none;
+    font-size: @font-size-h4;
+    &.active{
+      display: inline;
+    }
+  }
+}
+.yx-uploader-status{
+  margin-bottom: @font-size-base;
+  &.progress{
+    display: none;
+  }
+  &.progress.active{
+    display: block;
+  }
+}
