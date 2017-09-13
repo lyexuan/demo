@@ -8461,6 +8461,26 @@ a .icon-flip-vertical:before {
 body {
   background: #f1f1f1;
 }
+.module {
+  padding: 60px 0;
+}
+.module .page-header {
+  border-bottom: 1px solid #90a4ae;
+}
+.module:nth-child(2n+1) {
+  background: #eeeeee;
+}
+.module-title {
+  margin-bottom: 40px;
+  padding: 7px 0;
+  font-size: 22px;
+  background: #ffffff;
+  border-left: 3px solid #607d8b;
+  border-radius: 4px;
+}
+.module-title span {
+  padding-left: 14px;
+}
 #index header {
   background: #607d8b;
 }
@@ -8486,7 +8506,7 @@ body {
   color: #ffffff;
 }
 #index header nav li.active a {
-  background: #90a4ae;
+  background: #81959f;
 }
 #index header nav li.active:hover a {
   color: #ffffff;
@@ -8506,7 +8526,7 @@ body {
   display: none;
   width: 100%;
   padding: 40px 0;
-  background: #90a4ae;
+  background: rgba(144, 164, 174, 0.8);
 }
 #index .menu h3 {
   margin: 0;

@@ -12,11 +12,6 @@
 			height: 300px;
 			background: url("img/banner-front.png") center no-repeat;
 		}
-    .second-cat{
-      height: 300px;
-      border-top: 1px solid #ddd;
-      background: url("img/second-cat.png") center no-repeat;
-    }
 	</style>
 </head>
 <body id="index">
@@ -31,7 +26,7 @@
         <div class="col-xs-6">
           <nav id="nav">
             <ul class="list-unstyled clearfix">
-              <li><a href="index.html">首頁</a></li>
+              <li><a href="index.html">首页</a></li>
               <li id="js-menu-document"><a href="#">文档中心</a></li>
             </ul>
           </nav>
@@ -107,8 +102,47 @@
   </div>
   <main id="main">
   	<div class="banner"></div>
-    <div class="second-cat"></div>
-    <div class="second-cat"></div>
+
+    <div class="module">
+      <div class="container">
+        <div class="module-title"><span>前端框架</span></div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div id="chart-1" style="width: 100%;height: 400px;"></div>
+          </div>
+          <div class="col-sm-6">
+            <div class="page-header">
+              <h4>功能描述：</h4>
+            </div>
+            <p>描述该模块具备哪些功能，能够支撑哪些应用场景等...</p>
+            <p class="text-right">
+              <a href="module.html" class="btn btn-primary">查看详情</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="container">
+        <div class="module-title"><span>前端规范</span></div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div id="chart-2" style="width: 100%;height: 400px;"></div>
+          </div>
+          <div class="col-sm-6">
+            <div class="page-header">
+              <h4>功能描述：</h4>
+            </div>
+            <p>描述该模块具备哪些功能，能够支撑哪些应用场景等...</p>
+            <p class="text-right">
+              <a href="module.html" class="btn btn-primary">查看详情</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </main>
   <footer id="footer">
   	&copy; 2017
@@ -116,6 +150,29 @@
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/echarts.js"></script>
   <script src="js/index.js"></script>
+  <script>
+    window.onload = function(){
+      var chart1 = echarts.init(document.getElementById('chart-1')),
+          chart2 = echarts.init(document.getElementById('chart-2')),
+          option = {
+            series: [
+              {
+                name: '进展',
+                type: 'gauge',
+                center: ['50%','50%'],
+                detail: {formatter:'{value}%'},
+                data: [{value: 50, name: '进度'}]
+              }
+            ]
+          };
+      chart1.setOption(option); 
+      chart2.setOption(option);   
+    };
+    
+
+
+  </script>
 </body>
 </html>

@@ -1,3 +1,23 @@
 body{
 	background: #f1f1f1;
 }
+.module{
+	padding: 60px 0;
+	.page-header{
+		border-bottom: 1px solid @main-color-light;
+	}
+	&:nth-child(2n+1){
+		background: @gray-200;
+	}
+}
+.module-title{
+	margin-bottom: 40px;
+	padding: 7px 0;
+	font-size: @font-size-h3;
+	background: @white;
+	border-left: 3px solid @main-color;
+	border-radius: 4px;
+	span{
+		padding-left: 14px;
+	}
+}
