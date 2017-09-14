@@ -1,0 +1,1 @@
+define("test",[],function(){return{say:function(n){console.log(n),alert(n)}}}),require(["test"],function(n){console.log(n.say("hello"))}),define("main",function(){});
