@@ -1,0 +1,45 @@
+html,body,#main{
+	height: 100%;
+}
+#main{
+	padding-top: 48px;
+	.container-fluid,
+	.row,
+	.code,
+	.view,
+	.editorArea,
+	.CodeMirror,
+	iframe,
+	[class^="col-xs-"]{
+		height: 100%;
+	}
+	[class^="col-xs-"]{
+		padding: 0;
+		&+[class^="col-xs-"]{
+			border-left: 1px solid #ccc;
+		}
+	}
+	iframe{
+		width: 100%;
+		display: block;
+		border: none;
+	}
+	.code{
+		position: relative;
+	}
+	.toolbar{
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		width: 100%;
+		padding: 14px;
+		border-bottom: 1px solid #ccc;
+		[class^="col-xs-"]{
+			border: none;
+		}
+	}
+	.CodeMirror{
+		padding-top: 60px;
+	}
+}

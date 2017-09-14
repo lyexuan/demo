@@ -8587,3 +8587,15 @@ body {
 .article {
   padding-left: 240px;
 }
+#demo header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #607d8b;
+}
+#demo header .logo {
+  line-height: 48px;
+  font-size: 26px;
+  color: #ffffff;
+}

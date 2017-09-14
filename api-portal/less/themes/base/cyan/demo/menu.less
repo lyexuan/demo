@@ -1,0 +1,32 @@
+#demo{
+	.menu{
+		ul{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			li{
+				&.active{
+					background: @gray-200;
+					border-right: 3px solid @main-color;
+				}
+			}
+			a{
+				display: block;
+				padding: 14px;
+				color: @main-color;
+				&:hover{
+					color: @main-color-dark;
+				}
+			}
+		}
+		&>ul>li{
+			&+li{
+				border-top: 1px solid #ddd;
+			}
+			&>ul>li>a{
+				padding-left: 28px;
+			}
+		}
+		
+	}
+}

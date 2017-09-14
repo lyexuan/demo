@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo展示页面</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="js/codemirror/lib/codemirror.css">
+	<style>
+		
+	</style>
+</head>
+<body id="demo">
+  <header id="header">
+    <div class="container-fluid">
+      <div class="row clearfix">
+        <div class="col-xs-6">
+          <div class="logo">
+            Demo
+          </div>
+        </div>
+        <div class="col-xs-6">
+          
+        </div>
+      </div>
+    </div>  
+  </header>
+  
+  <main id="main">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-2">
+          <div class="menu">
+            <ul>
+              <li>
+                <a href="">1级菜单</a>
+                <ul>
+                  <li class="active"><a href="">2级菜单</a></li>
+                  <li><a href="">2级菜单</a></li>
+                  <li><a href="">2级菜单</a></li>
+                </ul>
+              </li>
+              <li><a href="">1级菜单</a></li>
+              <li><a href="">1级菜单</a></li>
+              <li><a href="">1级菜单</a></li>
+              <li><a href="">1级菜单</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="code">
+            <div class="toolbar">
+              <div class="row">
+                <div class="col-xs-6">
+                  <span style="line-height: 30px;">代码编辑区域</span>
+                </div>
+                <div class="col-xs-6 text-right"><button id="run" class="btn btn-primary btn-sm">运行</button></div>             
+              </div>
+            </div>  
+            <div class="editorArea">
+              <textarea name="codeEditor" id="codeEditor" style="display:none"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="view">
+            <iframe id="container"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </main>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/codemirror/lib/codemirror.min.js"></script>
+  <script> 
+    
+    var editor = null;
+    var textCode = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>test</title><script src="js/jquery.min.js"><\/script></head><body><h1>hello</h1><p>this is a test page.</p><button id="btn" type="button" name="button">click me</button><script>$(function(){$(\'#btn\').click(function(){alert(\'ok\');});});<\/script></body></html>';
+    function initEditor(){
+      if(!editor){
+        editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+          lineWrapping:true, //是否显示scroll
+          lineNumbers: false, //是否显示number
+          styleActiveLine: true,
+          matchBrackets: true,
+          mode:"htmlmixed",
+          viewportMargin: Infinity,
+          value: '<p>hello</p>'              
+        });
+      }else{
+        editor.setValue($("#codeEditor").val());
+      }
+    }
+    function run(){
+      var iframeContent = $("#codeEditor").val();
+      if(editor){
+          iframeContent = editor.getValue();
+      }
+      var nr=iframeContent.indexOf("<body>");
+      var iframeHead=iframeContent.slice(0,nr);
+      var iframeFooter=iframeContent.slice(nr,iframeContent.length);
+      var iFrame=document.getElementById("container").contentWindow;
+      iFrame.document.open();
+      iFrame.document.write(iframeHead);
+      iFrame.document.write(iframeFooter);
+      iFrame.document.close();        
+    }
+
+    $(function(){
+      $("#codeEditor").val(textCode);
+      initEditor();
+      run();
+      $('#run').click(function(){
+        run();
+      });
+    });
+  </script>
+</body>
+</html>
