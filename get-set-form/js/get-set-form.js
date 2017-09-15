@@ -6,7 +6,8 @@
 				    $text = $('input[type="text"]'),
 				    $radio = $('input[type="radio"]'),
 				    $checkbox = $('input[type="checkbox"]'),
-				    $select = $('select');
+				    $select = $('select'),
+				    $textarea = $('textarea');
 
 				$text.each(function(){
 					var $this = $(this),
@@ -39,6 +40,14 @@
 				});
 
 				$select.each(function(){
+					var $this = $(this),
+					    id = $this.attr('id');
+					if( id && id.indexOf('.')!==-1 ){
+						data.push({name: id,value: $this.val()});
+					}
+				});
+
+				$textarea.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
@@ -80,6 +89,10 @@
 							}
 
 							if(tagName==='SELECT'){
+								$input.val(value);
+							}
+
+							if(tagName==='TEXTAREA'){
 								$input.val(value);
 							}
 							

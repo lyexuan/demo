@@ -75,7 +75,8 @@
 	{"name":"test.radio","value":"radio2"},
 	{"name":"test.checkbox1","value":""},
 	{"name":"test.checkbox3","value":""},
-	{"name":"test.select","value":"option2"}
+	{"name":"test.select","value":"option2"},
+	{"name":"test.textarea","value":"this is a textarea"}
 ];</pre>
 
 	  <p>
@@ -101,6 +102,10 @@
 	  		<option value="option2">option2</option>
 	  	</select>
 	  </p>
+	  <p>
+	  	textarea:
+	  	<textarea name="test.textarea" id="test.textarea"></textarea>
+	  </p>
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
@@ -111,7 +116,8 @@
     	{"name":"test.radio","value":"radio2"},
     	{"name":"test.checkbox1","value":""},
     	{"name":"test.checkbox3","value":""},
-    	{"name":"test.select","value":"option2"}
+    	{"name":"test.select","value":"option2"},
+    	{"name":"test.textarea","value":"this is a textarea"}
     ];
   	$(function(){
   		$('#get').click(function(){
