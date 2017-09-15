@@ -1,3 +1,3 @@
-require(['test'],function(t){
+require(['app/test'],function(t){
 	console.log(t.say('hello'));//
 });

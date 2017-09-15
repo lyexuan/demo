@@ -1,1 +1,1 @@
-define("test",[],function(){return{say:function(n){console.log(n),alert(n)}}}),require(["test"],function(n){console.log(n.say("hello"))}),define("main",function(){});
+define("app/test",[],function(){return{say:function(n){console.log(n),alert(n)}}}),require(["app/test"],function(n){console.log(n.say("hello"))}),define("app/main",function(){});

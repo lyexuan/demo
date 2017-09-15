@@ -63,9 +63,12 @@
 						name = temp.name;
 						value = temp.value;
 						$input = $('#' + name.replace('.','\\.'));
-						tagName = $input[0].tagName.toUpperCase();
-						tagType = $input.attr('type').toUpperCase();
-						if($input.length && (tagName==='INPUT' || tagName==='SELECT')){
+
+						if($input.length){
+
+							tagName = $input[0].tagName.toUpperCase();
+							tagType = $input.attr('type').toUpperCase();
+						
 							if(tagName==='INPUT'){
 								if(tagType === 'TEXT'){
 									$input.val(value);

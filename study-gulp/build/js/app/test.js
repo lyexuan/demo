@@ -1,1 +1,0 @@
-define("test",[],function(){return{say:function(n){console.log(n),alert(n)}}});
