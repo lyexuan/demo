@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>get-set-form</title>
+	<meta charset="utf-8">
+	<style>
+		body{
+			font-size: 14px;
+			background: #eee;
+		}
+		table{
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th,td{
+			padding: 14px;
+			border: 1px solid #ddd;
+		}
+		thead th{
+			border-bottom: 1px solid #000;
+		}
+		pre{
+			border: 1px solid #ddd;
+			padding: 14px;
+			background: #f1f1f1;
+			border-radius: 4px;
+		}
+		.container{
+			background: #fff;
+			max-width: 960px;
+			margin: 20px auto;
+			padding: 20px;
+			border-radius: 6px;
+			box-shadow: 1px 1px 3px #999;
+		}
+	</style>
+</head>
+<body>
+  <div class="container">
+  	<h1>GSForm 批量操作表单组件</h1>
+	  <hr>
+	  <h2>一、API</h2>
+	  <table>
+	  	<thead>
+	  		<tr>
+	  			<th>方法</th>
+	  			<th>参数</th>
+	  			<th>返回值</th>
+	  			<th>描述</th>
+	  		</tr>
+	  		<tbody>
+	  			<tr>
+	  				<td>$.GSForm.get()</td>
+	  				<td>无</td>
+	  				<td>对象数组</td>
+	  				<td>元素用id识别，其中同名的radio元素指定第一个radio的id即可</td>
+	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.set(data)</td>
+	  				<td>对象数组</td>
+	  				<td>无</td>
+	  				<td>同上</td>
+	  			</tr>
+	  		</tbody>
+	  	</thead>
+	  </table>
+	  <h2>二、演示</h2>
+
+	  <button id="get">获取数据</button>
+	  <button id="set">设置数据</button>
+
+	  <P><strong>设置数据是用的测试数据：</strong></P>
+	  <pre>var testData = [
+	{"name":"test.text","value":"some text"},
+	{"name":"test.radio","value":"radio2"},
+	{"name":"test.checkbox1","value":""},
+	{"name":"test.checkbox3","value":""},
+	{"name":"test.select","value":"option2"}
+];</pre>
+
+	  <p>
+	  	text:
+	  	<input type="text" id="test.text" name="test.text">
+	  </p>
+	  <p>
+	    radio:
+	    <input type="radio" id="test.radio" name="test.radio" value="radio1">radio1
+	    <input type="radio" name="test.radio" value="radio2">radio2
+	    <input type="radio" name="test.radio" value="radio3">radio3
+	  </p>
+	  <p>
+	    checkbox:
+	    <input type="checkbox" id="test.checkbox1" name="test.checkbox1">checkbox1
+	    <input type="checkbox" id="test.checkbox2" name="test.checkbox2">checkbox2
+	    <input type="checkbox" id="test.checkbox3" name="test.checkbox3">checkbox3
+	  </p>
+	  <p>
+	  	select:
+	  	<select id="test.select" name="test.select">
+	  		<option value="option1">option1</option>
+	  		<option value="option2">option2</option>
+	  	</select>
+	  </p>
+  </div>
+  
+  <script src="js/jquery-1.4.2.min.js"></script>
+	<script src="js/get-set-form.js"></script>
+  <script>
+    var testData = [
+    	{"name":"test.text","value":"some text"},
+    	{"name":"test.radio","value":"radio2"},
+    	{"name":"test.checkbox1","value":""},
+    	{"name":"test.checkbox3","value":""},
+    	{"name":"test.select","value":"option2"}
+    ];
+  	$(function(){
+  		$('#get').click(function(){
+  			var data = $.GSForm.get();
+  			alert(JSON.stringify(data));
+  		});
+  		$('#set').click(function(){
+  			$.GSForm.set(testData);
+  		});
+  	});
+  </script>
+</body>
+</html>
