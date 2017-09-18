@@ -4,7 +4,7 @@
 			get: function(){
 				var data = [],
 				    $text = $('input[type="text"]'),
-				    $radio = $('input[type="radio"]'),
+				    $radio = $('input[type="radio"]:checked'),
 				    $checkbox = $('input[type="checkbox"]'),
 				    $select = $('select'),
 				    $textarea = $('textarea');
@@ -16,18 +16,20 @@
 						data.push({name: id,value: $this.val()});
 					}
 				});
-
+        //alert(0);
 				$radio.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id'),
 					    name,
 					    $radio;
 					if( id && id.indexOf('.')!==-1 ){
+						//alert(1);
 						name = $this.attr('name');
-					  $radio = $(':radio[name="'+name+'"]:checked');
-					  if($radio.length > 0){
-					  	data.push({name: id,value: $radio.val()});
-					  }
+					  //$radio = $(':radio[name="'+name+'"]:checked');
+					  //if($this.attr("checked")){
+					  	data.push({name: name,value: id});
+					  //}
+					  //alert(2);
 					}
 				});
 
@@ -72,6 +74,13 @@
 						name = temp.name;
 						value = temp.value;
 						$input = $('#' + name.replace('.','\\.'));
+						//alert(3);
+						if(!$input.length){
+							if(value && value!='/'){
+								$input = $('#' + value.replace('.','\\.'));
+							}
+							//alert(4);
+						}
 
 						if($input.length){
 
@@ -82,7 +91,7 @@
 								if(tagType === 'TEXT'){
 									$input.val(value);
 								}else if(tagType === 'RADIO'){
-									$radios = $(':radio[name="'+name+'"]').attr('checked',true);
+									$radios = $(':radio[id="'+value+'"]').attr('checked',true);
 								}else if(tagType === 'CHECKBOX'){
 									$input.attr('checked',true);
 								}
@@ -98,6 +107,48 @@
 							
 						}
 					}
+				}
+			},
+			getTable: function(tableId){
+				var data = [],
+				    $table = $('#' + tableId),
+				    $thead = $table.find('thead'),
+				    $th = $thead.find('td'),
+				    $tr = $table.find('tbody:visible>tr'),
+				    names = [];
+				$th.each(function(){
+					names.push($(this).attr('data-name'));
+				});    
+        
+				$tr.each(function(){
+					var $td = $(this).children('td'),
+					    item = {},
+					    name;
+					for(i=0,len=$td.length;i<len;i++){
+						name = names[i];
+						item[name] = $($td[i]).find('textarea').val();
+					}
+					data.push(item);
+				});
+				return data;
+			},
+			setTable: function(data,tableId){
+				var $table = $('#' + tableId),
+				    $tbody = $table.find('tbody'),
+				    len = data.length,
+				    html,
+				    temp;
+				if(len){
+					for(var i=0;i<len;i++){
+            temp = data[i];
+            html += '<tr>';
+            for(var t in temp){
+            	var _tempin = temp[t];
+            	html += '<td>' + _tempin + '</td>'
+            }
+            html += '</tr>';
+					}
+					$tbody.html(html);
 				}
 			}
 		}

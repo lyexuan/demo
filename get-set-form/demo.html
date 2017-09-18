@@ -61,6 +61,18 @@
 	  				<td>无</td>
 	  				<td>同上</td>
 	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.getTable(tableId)</td>
+	  				<td>无</td>
+	  				<td>对象数组</td>
+	  				<td></td>
+	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.setTable(data,tableId)</td>
+	  				<td>对象数组</td>
+	  				<td>无</td>
+	  				<td></td>
+	  			</tr>
 	  		</tbody>
 	  	</thead>
 	  </table>
@@ -68,16 +80,22 @@
 
 	  <button id="get">获取数据</button>
 	  <button id="set">设置数据</button>
+	  <button id="getTable">批量获取表格数据</button>
+	  <button id="setTable">批量设置表格数据</button>
 
 	  <P><strong>设置数据是用的测试数据：</strong></P>
 	  <pre>var testData = [
-	{"name":"test.text","value":"some text"},
-	{"name":"test.radio","value":"radio2"},
-	{"name":"test.checkbox1","value":""},
-	{"name":"test.checkbox3","value":""},
-	{"name":"test.select","value":"option2"},
-	{"name":"test.textarea","value":"this is a textarea"}
-];</pre>
+    	{"name":"test.text","value":"some text"},
+    	{"name":"test.radio","value":"test.radio2"},
+    	{"name":"test.checkbox1","value":""},
+    	{"name":"test.checkbox3","value":""},
+    	{"name":"test.select","value":"option2"},
+    	{"name":"test.textarea","value":"this is a textarea"}
+    ],
+    testData2 = [
+    	{"man":"x1","number":"xx1","require":"xxx1"},
+    	{"man":"x2","number":"xx2","require":"xxx2"}
+    ];</pre>
 
 	  <p>
 	  	text:
@@ -85,9 +103,9 @@
 	  </p>
 	  <p>
 	    radio:
-	    <input type="radio" id="test.radio" name="test.radio" value="radio1">radio1
-	    <input type="radio" name="test.radio" value="radio2">radio2
-	    <input type="radio" name="test.radio" value="radio3">radio3
+	    <input type="radio" id="test.radio1" name="test.radio" value="radio1">radio1
+	    <input type="radio" id="test.radio2" name="test.radio" value="radio2">radio2
+	    <input type="radio" id="test.radio3" name="test.radio" value="radio3">radio3
 	  </p>
 	  <p>
 	    checkbox:
@@ -106,6 +124,54 @@
 	  	textarea:
 	  	<textarea name="test.textarea" id="test.textarea"></textarea>
 	  </p>
+
+	  <table id="divMenu">
+      <thead>
+        <tr>
+          <td data-name="man">人  员</td>
+          <td data-name="number">数  量</td>
+          <td data-name="require">资 格 要 求</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </tbody>
+      <tbody id="addtr">
+      	<tr id="templatetr" class="templatetr">
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+        <tr id="templatetr" class="templatetr">
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </tbody>
+      <tbody id="ACE_HIDDEN_TABLE" style="display: none">
+        <tr id="templatetr" class="templatetr">
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="divMenu2">
+      <thead>
+        <tr>
+          <td data-name="man">人  员</td>
+          <td data-name="number">数  量</td>
+          <td data-name="require">资 格 要 求</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
@@ -113,11 +179,15 @@
   <script>
     var testData = [
     	{"name":"test.text","value":"some text"},
-    	{"name":"test.radio","value":"radio2"},
+    	{"name":"test.radio","value":"test.radio2"},
     	{"name":"test.checkbox1","value":""},
     	{"name":"test.checkbox3","value":""},
     	{"name":"test.select","value":"option2"},
     	{"name":"test.textarea","value":"this is a textarea"}
+    ],
+    testData2 = [
+    	{"man":"x1","number":"xx1","require":"xxx1"},
+    	{"man":"x2","number":"xx2","require":"xxx2"}
     ];
   	$(function(){
   		$('#get').click(function(){
@@ -126,6 +196,13 @@
   		});
   		$('#set').click(function(){
   			$.GSForm.set(testData);
+  		});
+  		$('#getTable').click(function(){
+  			var data = $.GSForm.getTable('divMenu');
+  			alert(JSON.stringify(data));
+  		});
+  		$('#setTable').click(function(){
+  			$.GSForm.setTable(testData2,'divMenu2');
   		});
   	});
   </script>
