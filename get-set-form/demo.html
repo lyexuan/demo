@@ -33,6 +33,33 @@
 			border-radius: 6px;
 			box-shadow: 1px 1px 3px #999;
 		}
+
+		/*placeholder*/
+    .text-placeholder{color: #aaa;}
+		/*placeholder*/
+
+		/*增强型表格*/
+		.advance-table-btn{
+			position: absolute;
+			top: 0;
+			display: none;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			color: #fff;
+			text-align: center;
+			cursor: pointer;
+			font-size: 20px;
+		}
+		.advance-table-btn-add{
+			background: #03a9f4;
+      left: -15px;
+		}
+		.advance-table-btn-del{
+			background: #f44336;
+      right: -15px;
+		}
+		/*增强型表格*/
 	</style>
 </head>
 <body>
@@ -76,6 +103,8 @@
 	  		</tbody>
 	  	</thead>
 	  </table>
+
+
 	  <h2>二、演示</h2>
 
 	  <button id="get">获取数据</button>
@@ -99,7 +128,7 @@
 
 	  <p>
 	  	text:
-	  	<input type="text" id="test.text" name="test.text">
+	  	<input type="text" id="test.text" name="test.text" placeholder="测试低版本ie的placeholder">
 	  </p>
 	  <p>
 	    radio:
@@ -140,18 +169,7 @@
           <td><textarea></textarea></td>
         </tr>
       </tbody>
-      <tbody id="addtr">
-      	<tr id="templatetr" class="templatetr">
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
-        </tr>
-        <tr id="templatetr" class="templatetr">
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
-        </tr>
-      </tbody>
+      <tbody id="addtr"></tbody>
       <tbody id="ACE_HIDDEN_TABLE" style="display: none">
         <tr id="templatetr" class="templatetr">
           <td><textarea></textarea></td>
@@ -161,21 +179,16 @@
       </tbody>
     </table>
 
-    <table id="divMenu2">
-      <thead>
-        <tr>
-          <td data-name="man">人  员</td>
-          <td data-name="number">数  量</td>
-          <td data-name="require">资 格 要 求</td>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
+    <h2>三、placeholder兼容性处理</h2>
+    <p>1.css</p>
+    <pre>.text-placeholder{color: #aaa;}</pre>
+    <p>2.js</p>
+    <pre>$('input[type="text"]').textPlaceholder();</pre>
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
 	<script src="js/get-set-form.js"></script>
+	<script src="js/jquery.textPlaceholder.js"></script>
   <script>
     var testData = [
     	{"name":"test.text","value":"some text"},
@@ -190,6 +203,7 @@
     	{"man":"x2","number":"xx2","require":"xxx2"}
     ];
   	$(function(){
+  		/*批量操作表单*/
   		$('#get').click(function(){
   			var data = $.GSForm.get();
   			alert(JSON.stringify(data));
@@ -202,8 +216,17 @@
   			alert(JSON.stringify(data));
   		});
   		$('#setTable').click(function(){
-  			$.GSForm.setTable(testData2,'divMenu2');
+  			$.GSForm.setTable(testData2,'divMenu');
   		});
+  		/*批量操作表单*/
+
+  		/*表格增减行操作*/
+      $.GSForm.advanceTable('divMenu');
+  		/*表格增减行操作*/
+
+  		/*placeholder*/
+      $('input[type="text"]').textPlaceholder();
+  		/*placeholder*/
   	});
   </script>
 </body>

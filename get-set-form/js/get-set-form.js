@@ -132,21 +132,88 @@
 			},
 			setTable: function(data,tableId){
 				var $table = $('#' + tableId),
-				    $tbody = $table.find('tbody'),
+				    $tbody1 = $table.find('tbody:eq(0)'),
+				    $tbody2 = $table.find('#addtr'),
 				    len = data.length,
-				    html,
+				    html1 = '',
+				    html2 = '',
 				    temp;
 				if(len){
 					for(var i=0;i<len;i++){
-            temp = data[i];
-            html += '<tr>';
-            for(var t in temp){
-            	var _tempin = temp[t];
-            	html += '<td>' + _tempin + '</td>'
-            }
-            html += '</tr>';
+						temp = data[i];
+
+						if(i===0){
+							html1 += '<tr>';
+	            for(var t in temp){
+	            	var _tempin = temp[t];
+	            	html1 += '<td><textarea>' + _tempin + '</textarea></td>'
+	            }
+	            html1 += '</tr>';
+						}else{
+							html2 += '<tr>';
+	            for(var t in temp){
+	            	var _tempin = temp[t];
+	            	html2 += '<td><textarea>' + _tempin + '</textarea></td>'
+	            }
+	            html2 += '</tr>';
+						}
 					}
-					$tbody.html(html);
+					$tbody1.html(html1);
+					$tbody2.html(html2);
+				}
+			},
+			advanceTable: function(tableId){
+				var $table = $('#' + tableId),
+				    $textarea = $table.find('textarea:visible'),
+				    $advanceTable = null,
+				    $btnAdd = $('<div class="advance-table-btn advance-table-btn-add">+</div>'),
+				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">-</div>');
+
+				//将表格用一个相对定位的div包裹
+        $table.wrap('<div id="advance-table" style="position: relative;"></div>');
+        $advanceTable = $('#advance-table');
+        //增加两个按钮，新增和删除
+        $advanceTable.append($btnAdd)
+                     .append($btnDel);
+
+        //文本域绑定点击事件
+				$textarea.click(function(){
+					var $this = $(this),
+					    $tr = $this.parents('tr');
+
+          //$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
+					$tr.addClass('advance-table-current-row');  
+					console.log($tr); 
+					refreshBtnPos();
+				}); 
+
+				//文本域失去焦点事件
+				$textarea.blur(function(){
+					var $this = $(this),
+					    $tr = $this.parents('tr');
+          $tr.removeClass('advance-table-current-row');
+          console.log($tr); 
+					refreshBtnPos();
+				}); 
+
+				//刷新按钮位置
+				function refreshBtnPos(){
+					var $cRow = $table.find('.advance-table-current-row');
+					if($cRow.length){
+
+					}else{
+						hideBtn();
+					}
+				}   
+				//显示按钮
+				function showBtn(){
+					$btnAdd.show();
+					$btnDel.show();
+				}
+				//隐藏按钮
+				function hideBtn(){
+					$btnAdd.hide();
+					$btnDel.hide();
 				}
 			}
 		}
