@@ -16,20 +16,15 @@
 						data.push({name: id,value: $this.val()});
 					}
 				});
-        //alert(0);
+        
 				$radio.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id'),
 					    name,
 					    $radio;
-					if( id && id.indexOf('.')!==-1 ){
-						//alert(1);
+					if( id && id.indexOf('.')!==-1 ){						
 						name = $this.attr('name');
-					  //$radio = $(':radio[name="'+name+'"]:checked');
-					  //if($this.attr("checked")){
-					  	data.push({name: name,value: id});
-					  //}
-					  //alert(2);
+					  data.push({name: name,value: id});					  
 					}
 				});
 
@@ -74,18 +69,21 @@
 						name = temp.name;
 						value = temp.value;
 						$input = $('#' + name.replace('.','\\.'));
-						//alert(3);
+
 						if(!$input.length){
+							//if(value && !/[/]/.test(value)){
 							if(value && value!='/'){
 								$input = $('#' + value.replace('.','\\.'));
 							}
-							//alert(4);
 						}
 
 						if($input.length){
 
 							tagName = $input[0].tagName.toUpperCase();
-							tagType = $input.attr('type').toUpperCase();
+							tagType = $input.attr('type');
+							if(tagType){
+								tagType = tagType.toUpperCase();
+							}
 						
 							if(tagName==='INPUT'){
 								if(tagType === 'TEXT'){
