@@ -12,7 +12,7 @@
 				$text.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 ){
+					if( id && id.indexOf('.')!==-1 && !$this.hasClass('text-placeholder')){
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -87,6 +87,7 @@
 						
 							if(tagName==='INPUT'){
 								if(tagType === 'TEXT'){
+									$input.removeClass('text-placeholder');
 									$input.val(value);
 								}else if(tagType === 'RADIO'){
 									$radios = $(':radio[id="'+value+'"]').attr('checked',true);
