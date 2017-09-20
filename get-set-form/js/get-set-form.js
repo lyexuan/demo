@@ -164,43 +164,94 @@
 			},
 			advanceTable: function(tableId){
 				var $table = $('#' + tableId),
+				    $tbody = $('#addtr'),
 				    $textarea = $table.find('textarea:visible'),
 				    $advanceTable = null,
 				    $btnAdd = $('<div class="advance-table-btn advance-table-btn-add">+</div>'),
-				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">-</div>');
+				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">-</div>'),
+				    template = '';
+
+				//获取模板
+				template = $('#ACE_HIDDEN_TABLE').html().replace(/id="[^"]*"/,'');
+				//$template = $(template).removeAttr('id');
 
 				//将表格用一个相对定位的div包裹
         $table.wrap('<div id="advance-table" style="position: relative;"></div>');
         $advanceTable = $('#advance-table');
+
         //增加两个按钮，新增和删除
         $advanceTable.append($btnAdd)
                      .append($btnDel);
+        //点击新增按钮，增加一行
+        $btnAdd.click(function(){
+        	var $tr = $table.find('.advance-table-current-row'),
+        	    $t = $(template).addClass('advance-table-current-row');
+        	$tr.removeClass('advance-table-current-row');
+        	if(isFirstRow($tr)){
+        		$tbody.prepend($t);
+        	}else{
+            $tr.after($t);
+        	}
+        	refreshBtnPos();
+        });
+        //点击删除按钮
+        $btnDel.click(function(){
+        	var $tr = $table.find('.advance-table-current-row'),
+        	    $nextTr;
+
+        	if($tr.prev('tr').length){
+        		$nextTr = $tr.prev('tr');
+        	}else if($tr.next('tr').length){
+        		$nextTr = $tr.next('tr');
+        	}else{
+        		$nextTr = $tbody.prev('tbody').children('tr');
+        	}
+        	$tr.remove();
+        	$nextTr.addClass('advance-table-current-row');
+        	refreshBtnPos();
+        });
+
+        //初始化控制按钮
+        $tbody.prev('tbody').children('tr').addClass('advance-table-current-row');
+        refreshBtnPos();
 
         //文本域绑定点击事件
-				$textarea.click(function(){
+        $('#' + tableId + ' textarea').live('click',function(){
+				//$textarea.click(function(){
 					var $this = $(this),
 					    $tr = $this.parents('tr');
 
-          //$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
-					$tr.addClass('advance-table-current-row');  
-					console.log($tr); 
-					refreshBtnPos();
+					if(!$tr.hasClass('advance-table-current-row')){
+						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
+						$tr.addClass('advance-table-current-row');  
+						refreshBtnPos();
+					}    	
 				}); 
 
 				//文本域失去焦点事件
-				$textarea.blur(function(){
+				/*$textarea.blur(function(){
 					var $this = $(this),
 					    $tr = $this.parents('tr');
           $tr.removeClass('advance-table-current-row');
-          console.log($tr); 
 					refreshBtnPos();
-				}); 
+				});*/ 
 
 				//刷新按钮位置
 				function refreshBtnPos(){
-					var $cRow = $table.find('.advance-table-current-row');
+					var $cRow = $table.find('.advance-table-current-row'),
+					    top = 0,
+					    trHeight = 0;
 					if($cRow.length){
-
+						//将按钮移动到合适的位置
+						top = $cRow.offset().top - $table.offset().top;
+						trHeight = $cRow.height() / 2 - 15;
+						top += trHeight;
+						$btnAdd.css('top',top);
+						$btnDel.css('top',top);
+						showBtn();
+						if(isFirstRow($cRow)){
+							$btnDel.hide();
+						}
 					}else{
 						hideBtn();
 					}
@@ -214,6 +265,10 @@
 				function hideBtn(){
 					$btnAdd.hide();
 					$btnDel.hide();
+				}
+				//判断是否是第一行
+				function isFirstRow($tr){
+					return !$tr.parent().attr('id');
 				}
 			}
 		}
