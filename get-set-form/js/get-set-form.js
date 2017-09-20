@@ -271,6 +271,105 @@
 				function isFirstRow($tr){
 					return !$tr.parent().attr('id');
 				}
+			},
+			required: function(){
+				var $r = $('.required'),
+				    that = this;
+				$r.live('blur keyup input change select',function(){
+					that.validSingle($(this));
+				});
+			},
+			validSingle: function($e){
+				var isValid = true,
+				    $this = $e,
+					  tagName = $this[0].tagName.toUpperCase(),
+					  tagType = '',
+					  msg = '<div style="background: #f44336;color: #fff;position: absolute;padding: 2px 7px;font-size: 12px;border-radius: 4px;margin-left: 15px;"><div style="position: absolute;left: -12px;top: 50%;margin-top: -6px;width: 0;height: 0;border-width: 6px;border-style: solid;border-color: transparent #f44336 transparent transparent;"></div>必填项</div>',
+					  $msg = $(msg);
+
+			  if(tagName === 'INPUT'){
+					tagType = $this.attr('type');
+					if(tagType){
+						tagType = tagType.toUpperCase();
+					}
+				
+					if(tagName==='INPUT'){
+						if(tagType === 'TEXT'){
+							if(!($this.val() && !$this.hasClass('text-placeholder'))){
+								isValid = false;
+								$this.addClass('invalid');
+							}else{
+								$this.removeClass('invalid');
+							}
+						}else if(tagType === 'RADIO'){
+							var $radios = $('[name="' + $this.attr('name').replace('.','\\.') + '"]'),
+							    $radio = $radios.filter(':checked');
+							if($radio.length === 0){
+								isValid = false;
+								$radios.addClass('invalid');
+							}else{
+								$radios.removeClass('invalid');
+							}
+						}else if(tagType === 'CHECKBOX'){
+							var $radios = $('[name="' + $this.attr('name').replace('.','\\.') + '"]'),
+							    $radio = $radios.filter(':checked');
+							if($radio.length === 0){
+								isValid = false;
+								$radios.addClass('invalid');
+							}else{
+								$radios.removeClass('invalid');
+							}
+						}
+					}
+				}else if(tagName === 'TEXTAREA'){
+					if(!($this.val() && !$this.hasClass('text-placeholder'))){
+						isValid = false;
+						$this.addClass('invalid');
+					}else{
+						$this.removeClass('invalid');
+					}
+				}else if(tagName==='SELECT'){
+					if(!$this.val()){
+						isValid = false;
+						$this.addClass('invalid');
+					}else{
+						$this.removeClass('invalid');
+					}
+				}  
+
+				if(!isValid){
+					//给出提示语，提示语展示几秒钟后消失，只留下红色的边框
+					$msg.css({
+						"top": $this.offset().top,
+						"left": $this.offset().left + $this.width()
+					});
+					$this.after($msg);
+					$msg.fadeOut(5000,function(){
+						$msg.remove();
+					});
+				}
+
+				return isValid;
+			},
+			valid: function(){
+				var isValid = true,
+				    invalidElements = [],
+				    $r = $('.required'),
+				    that = this;
+
+				$r.each(function(){
+					var $this = $(this);
+					if(!that.validSingle($this)){
+						isValid = false;
+						invalidElements.push($this);
+					}
+				});
+
+				if(invalidElements.length){
+					invalidElements[0].focus();
+				}
+
+				return isValid;
 			}
 		}
 	});

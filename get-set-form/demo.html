@@ -33,6 +33,9 @@
 			border-radius: 6px;
 			box-shadow: 1px 1px 3px #999;
 		}
+		.text-danger{
+			color: #f44336;
+		}
 
 		/*placeholder*/
     .text-placeholder{color: #aaa;}
@@ -60,9 +63,28 @@
       right: -30px;
 		}
 		/*增强型表格*/
+
+		/*表单验证相关样式*/
+		input[type="text"].invalid,
+		input[type="text"].invalid:focus,
+		textarea.invalid,
+		textarea.invalid:focus,
+		select.invalid,
+		select.invalid:focus{
+			border: 1px solid #f44336;
+		}
+		input[type="radio"].invalid,
+		input[type="radio"].invalid:focus,
+		input[type="checkbox"].invalid,
+		input[type="checkbox"].invalid:focus{
+			border: 1px solid #f44336;
+			outline: 1px solid #f44336;
+		}
+		/*表单验证相关样式*/
 	</style>
 </head>
 <body>
+	
   <div class="container">
   	<h1>GSForm 批量操作表单组件</h1>
 	  <hr>
@@ -106,6 +128,18 @@
 	  				<td>无</td>
 	  				<td>给表格增加添加删除行的功能，表格的html结构一定要按照demo中给出的样子，另外demo中的'增强型表格'相关样式要添加到页面公共css文件中</td>
 	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.required()</td>
+	  				<td>无</td>
+	  				<td>无</td>
+	  				<td>简单执行以下这句代码，使表单具备值改变的时候，检验必填的功能，需要校验的项，都需具备class="required"，并且有关联关系的radio和checkbox要设置相同的name值</td>
+	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.valid()</td>
+	  				<td>无</td>
+	  				<td>Boolean</td>
+	  				<td>对整个页面的必填项做校验，并且让第一个不通过验证的项获得焦点</td>
+	  			</tr>
 	  		</tbody>
 	  	</thead>
 	  </table>
@@ -113,6 +147,7 @@
 
 	  <h2>二、演示</h2>
 
+    <p class="text-danger">点击'获取数据'可以测试必填项的校验</p>
 	  <button id="get">获取数据</button>
 	  <button id="set">设置数据</button>
 	  <button id="getTable">批量获取表格数据</button>
@@ -134,34 +169,35 @@
 
 	  <p>
 	  	text:
-	  	<input type="text" id="test.text" name="test.text" placeholder="测试低版本ie的placeholder">
+	  	<input type="text" id="test.text" name="test.text" placeholder="测试低版本ie的placeholder" class="required">
 	  </p>
 	  <p>
 	  	text2:
-	  	<input type="text" id="test.text2" name="test.text2" placeholder="text2">
+	  	<input type="text" id="test.text2" name="test.text2" placeholder="text2" class="required">
 	  </p>
 	  <p>
 	    radio:
-	    <input type="radio" id="test.radio1" name="test.radio" value="radio1">radio1
-	    <input type="radio" id="test.radio2" name="test.radio" value="radio2">radio2
-	    <input type="radio" id="test.radio3" name="test.radio" value="radio3">radio3
+	    <input type="radio" id="test.radio1" name="test.radio" value="radio1" class="required">radio1
+	    <input type="radio" id="test.radio2" name="test.radio" value="radio2" class="required">radio2
+	    <input type="radio" id="test.radio3" name="test.radio" value="radio3" class="required">radio3
 	  </p>
 	  <p>
 	    checkbox:
-	    <input type="checkbox" id="test.checkbox1" name="test.checkbox1">checkbox1
-	    <input type="checkbox" id="test.checkbox2" name="test.checkbox2">checkbox2
-	    <input type="checkbox" id="test.checkbox3" name="test.checkbox3">checkbox3
+	    <input type="checkbox" id="test.checkbox1" name="test.checkbox" class="required">checkbox1
+	    <input type="checkbox" id="test.checkbox2" name="test.checkbox" class="required">checkbox2
+	    <input type="checkbox" id="test.checkbox3" name="test.checkbox" class="required">checkbox3
 	  </p>
 	  <p>
 	  	select:
-	  	<select id="test.select" name="test.select">
+	  	<select id="test.select" name="test.select" class="required">
+	  		<option value="">--请选择--</option>
 	  		<option value="option1">option1</option>
 	  		<option value="option2">option2</option>
 	  	</select>
 	  </p>
 	  <p>
 	  	textarea:
-	  	<textarea name="test.textarea" id="test.textarea"></textarea>
+	  	<textarea name="test.textarea" id="test.textarea" class="required"></textarea>
 	  </p>
 
 	  <table id="divMenu">
@@ -200,6 +236,7 @@
 	<script src="js/get-set-form.js"></script>
 	<script src="js/jquery.textPlaceholder.js"></script>
 	<script src="js/json2.js"></script>
+	
   <script>
     var testData = [
     	{"name":"test.text","value":"some text"},
@@ -214,10 +251,17 @@
     	{"man":"x2","number":"xx2","require":"xxx2"}
     ];
   	$(function(){
+  		/*给表单的操作行为添加通用校验*/
+  		$.GSForm.required();
+  		/*给表单的操作行为添加通用校验*/
+
   		/*批量操作表单*/
   		$('#get').click(function(){
-  			var data = $.GSForm.get();
-  			alert(JSON.stringify(data));
+  			/*验证必填*/
+  			if($.GSForm.valid()){
+  				var data = $.GSForm.get();
+  				alert(JSON.stringify(data));
+  			}
   		});
   		$('#set').click(function(){
   			$.GSForm.set(testData);
