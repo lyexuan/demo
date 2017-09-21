@@ -41,6 +41,8 @@ input[type="text"]{
   border: none;
   border-bottom: 1px solid #999;
   width: 80px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 table{
