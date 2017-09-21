@@ -3,6 +3,7 @@
 <head>
 	<title>get-set-form</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" href="js/jquery-foxibox-0.2/style/jquery-foxibox-0.2.css">
 	<link rel="stylesheet" href="css/templet.css">
 	<style>
 		thead th{
@@ -25,51 +26,6 @@
 		.text-danger{
 			color: #f44336;
 		}
-
-		/*placeholder*/
-    .text-placeholder{color: #aaa;}
-		/*placeholder*/
-
-		/*增强型表格*/
-		.advance-table-btn{
-			position: absolute;
-			top: 0;
-			display: none;
-			width: 30px;
-			height: 30px;
-			line-height: 30px;
-			color: #fff;
-			text-align: center;
-			cursor: pointer;
-			font-size: 20px;
-		}
-		.advance-table-btn-add{
-			background: #03a9f4;
-      left: -30px;
-		}
-		.advance-table-btn-del{
-			background: #f44336;
-      right: -30px;
-		}
-		/*增强型表格*/
-
-		/*表单验证相关样式*/
-		input[type="text"].invalid,
-		input[type="text"].invalid:focus,
-		textarea.invalid,
-		textarea.invalid:focus,
-		select.invalid,
-		select.invalid:focus{
-			border: 1px solid #f44336;
-		}
-		input[type="radio"].invalid,
-		input[type="radio"].invalid:focus,
-		input[type="checkbox"].invalid,
-		input[type="checkbox"].invalid:focus{
-			border: 1px solid #f44336;
-			outline: 1px solid #f44336;
-		}
-		/*表单验证相关样式*/
 	</style>
 </head>
 <body>
@@ -219,9 +175,14 @@
     <pre>.text-placeholder{color: #aaa;}</pre>
     <p>2.js</p>
     <pre>$('input[type="text"]').textPlaceholder();</pre>
+
+    <h2>四、插入图片</h2>
+    <div class="btn-add-img" id="btn-add-img">插入图片</div>
+    <div class="pictures" id="pictures"></div>  
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
+  <script src="js/jquery-foxibox-0.2/script/jquery-foxibox-0.2.min.js"></script>
 	<script src="js/get-set-form.js"></script>
 	<script src="js/jquery.textPlaceholder.js"></script>
 	<script src="js/json2.js"></script>
@@ -271,6 +232,55 @@
   		/*placeholder*/
       $('input[type="text"]').textPlaceholder();
   		/*placeholder*/
+
+  		/*插入图片以及图片查看*/
+  		$('#btn-add-img').click(function(){
+  			/*测试*/
+  			var html = '',
+  			    $html;
+  			for(var i=1;i<=5;i++){
+  				html += '<div class="picture-item"><a href="img/img-' + i + '.jpg" rel="[gall1]"><img src="img/img-' + i + '.jpg"></a><span class="btn-del-img"></span></div>'
+  			}
+  			$('#foxibox_overlay,#foxibox_loader,#foxibox_container,#foxibox_details').remove();
+
+  			//AddImage('BidderBasicInfo.Img');
+
+  			$html = $(html);
+  			$html.find('.btn-del-img').click(function(){
+  				alert('删除');
+  			});
+  			$('#pictures').append($html);
+  			$('#pictures a').foxibox();
+  			/*测试*/
+
+  			/*正式使用*/
+  			//$('#foxibox_overlay,#foxibox_loader,#foxibox_container,#foxibox_details').remove();
+        //AddImage('BidderBasicInfo.Img');
+        //$('#pictures a').foxibox();
+  			/*正式使用*/
+  		});
+
+  		function AddImage(imgAttribute) {
+			  var imgValue = window.external.AddImage();
+			  if (imgValue != "") {
+	        var sizeArry = imgValue.split(',');
+	        //src:sizeArry[0]
+	        //width:sizeArry[2]
+	        //height:sizeArry[3]
+	        //DelImgPath:sizeArry[1]
+	        var html = '<div class="picture-item"><a href="' + sizeArry[0] + '" rel="[gall1]"><img src="' + sizeArry[0] + '"></a><span class="btn-del-img" delImgPath="' + sizeArry[1] + '"></span></div>';
+          var $html = $(html);
+          $html.find('.btn-del-img').click(function(){
+	  				var $this = $(this),
+	  				    delImgPath = $this.attr('delImgPath');
+
+	  				window.external.DeleteImg(delImgPath);
+	  				$this.parent().remove();
+	  			});
+          $('#pictures').append($html);
+			  }
+			}
+  		/*插入图片以及图片查看*/
   	});
   </script>
 </body>
