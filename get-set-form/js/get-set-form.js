@@ -370,6 +370,34 @@
 				}
 
 				return isValid;
+			},
+			autoInputWidth: function(){
+				//设置原始长度属性值
+				$('input[type="text"]').each(function(){
+					var $this = $(this),
+					    width = $this.width() + 16;
+
+					$this.attr('oriWidth',width);
+				});
+
+				//给输入框绑定值改变的事件
+				$('input[type="text"]').bind('input propertychange', function(){
+					var $this = $(this),
+					    oriWidth = $this.attr('oriWidth'),
+					    value = $this.value(),
+					    $span = ('<span style="position: absolute; top: -1000px;left: -1000px;">' + value + '</span>'),
+					    newWidth = oriWidth;
+
+          $('body').append($span);
+          newWidth = = $span.width() + 16;
+					//用一个模拟的span去获取内容的宽度，和初始宽度比对，超多初始宽度则拓宽input否则还原原始长度
+					if(oriWidth<newWidth){
+            $this.width(newWidth - 16);
+					}else{
+						$this.width(oriWidth - 16);
+					}
+					$span.remove();
+        });
 			}
 		}
 	});
