@@ -5,6 +5,9 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/templet.css">
 	<style>
+	  body{
+	  	font-family: 'Microsoft Yahei';
+	  }
 		thead th{
 			border-bottom: 1px solid #000;
 		}
@@ -36,62 +39,99 @@
 	  <table>
 	  	<thead>
 	  		<tr>
-	  			<th>方法</th>
-	  			<th>参数</th>
-	  			<th>返回值</th>
-	  			<th style="width: 360px;">描述</th>
+	  			<td>方法</td>
+	  			<td>参数</td>
+	  			<td>返回值</td>
+	  			<td style="width: 360px;">描述</td>
 	  		</tr>
-	  		<tbody>
-	  			<tr>
-	  				<td>$.GSForm.get()</td>
-	  				<td>无</td>
-	  				<td>对象数组</td>
-	  				<td>元素用id识别，其中同名的radio元素指定第一个radio的id即可</td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.set(data)</td>
-	  				<td>对象数组</td>
-	  				<td>无</td>
-	  				<td>同上</td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.getTable(tableId)</td>
-	  				<td>表格的id</td>
-	  				<td>对象数组</td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.setTable(data,tableId)</td>
-	  				<td>对象数组,表格的id</td>
-	  				<td>无</td>
-	  				<td></td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.advanceTable(tableId)</td>
-	  				<td>表格的id</td>
-	  				<td>无</td>
-	  				<td>给表格增加添加删除行的功能，表格的html结构一定要按照demo中给出的样子，另外demo中的'增强型表格'相关样式要添加到页面公共css文件中</td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.required()</td>
-	  				<td>无</td>
-	  				<td>无</td>
-	  				<td>简单执行以下这句代码，使表单具备值改变的时候，检验必填的功能，需要校验的项，都需具备class="required"，并且有关联关系的radio和checkbox要设置相同的name值</td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.valid()</td>
-	  				<td>无</td>
-	  				<td>Boolean</td>
-	  				<td>对整个页面的必填项做校验，并且让第一个不通过验证的项获得焦点</td>
-	  			</tr>
-	  			<tr>
-	  				<td>$.GSForm.autoInputWidth()</td>
-	  				<td>无</td>
-	  				<td>无</td>
-	  				<td>-</td>
-	  			</tr>
-	  		</tbody>
-	  	</thead>
+	  	</thead>	
+  		<tbody>
+  			<tr>
+  				<td>$.GSForm.get()</td>
+  				<td>无</td>
+  				<td>对象数组</td>
+  				<td>元素用id识别，其中同名的radio元素指定第一个radio的id即可</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.set(data)</td>
+  				<td>对象数组</td>
+  				<td>无</td>
+  				<td>同上</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.getTable(tableId)</td>
+  				<td>表格的id</td>
+  				<td>对象数组</td>
+  				<td></td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.setTable(data,tableId)</td>
+  				<td>对象数组,表格的id</td>
+  				<td>无</td>
+  				<td></td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.advanceTable(tableId)</td>
+  				<td>表格的id</td>
+  				<td>无</td>
+  				<td>给表格增加添加删除行的功能，表格的html结构一定要按照demo中给出的样子，另外demo中的'增强型表格'相关样式要添加到页面公共css文件中</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.required()</td>
+  				<td>无</td>
+  				<td>无</td>
+  				<td>简单执行以下这句代码，使表单具备值改变的时候，检验必填的功能，需要校验的项，都需具备class="required"，并且有关联关系的radio和checkbox要设置相同的name值</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.valid()</td>
+  				<td>无</td>
+  				<td>Boolean</td>
+  				<td>对整个页面的必填项做校验，并且让第一个不通过验证的项获得焦点</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.autoInputWidth()</td>
+  				<td>无</td>
+  				<td>无</td>
+  				<td>-</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.advanceInfoGroup(wrapId,moreInfo)</td>
+  				<td>容器id,插值数组（非必传）</td>
+  				<td>无</td>
+  				<td>参看demo第七点'增减'类表格'模式的输入框组'，html结构要完全遵循demo中的两个例子，其中第二个例子传入了插值数组['牵头人','成员一','成员二','成员三','成员四'],数据里的条目将会替换模板中的占位符###yx###</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.getInfoGroup(wrapId)</td>
+  				<td>容器id</td>
+  				<td>对象数组</td>
+  				<td>参看demo第七点'增减'类表格'模式的输入框组'</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.setInfoGroup(data,wrapId,moreInfo)</td>
+  				<td>对象数组,容器id,插值数组（非必传）</td>
+  				<td>无</td>
+  				<td>参看demo第七点'增减'类表格'模式的输入框组'</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.complexAdvanceTable(wrapId)</td>
+  				<td>容器的id</td>
+  				<td>无</td>
+  				<td>给复杂表格增加功能，使其能够增加或者删除某一组及某一行</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.getComplexAdvanceTable(wrapId)</td>
+  				<td>容器的id</td>
+  				<td>对象数组</td>
+  				<td>获取复杂表格的数据</td>
+  			</tr>
+  			<tr>
+  				<td>$.GSForm.setComplexAdvanceTable(data,wrapId)</td>
+  				<td>对象数组,容器的id</td>
+  				<td>无</td>
+  				<td>初始化复杂表格的数据</td>
+  			</tr>
+  		</tbody>
+	  	
 	  </table>
 
 
@@ -182,8 +222,8 @@
     <pre>$('input[type="text"]').textPlaceholder();</pre>
 
     <h2>四、插入图片</h2>
-    <div class="btn-add-img" id="btn-add-img">插入图片</div>
-    <div class="pictures" id="pictures"></div>    
+    <div class="pictures" id="pictures"></div> 
+    <div class="btn-add-img" id="btn-add-img">插入图片</div>   
 
     <h2>四、输入框自动增长</h2>
     <p>文档加载好后执行如下代码即可：</p>
@@ -235,6 +275,102 @@
 	    </select>
 	    <div class="ctrl add">+</div>
 	    <div class="ctrl del" style="display: none;">-</div>
+    </div>
+
+    <h2>七、增减'类表格'模式的输入框组</h2>
+    <button id="get2">获取数据</button>
+    <button id="set2">设置数据</button>
+    <div id="info-group" class="info-group">
+      联合体各成员单位内部的职责分工如下：
+      <div class="info-group-body info-group-body-inline">
+
+	      <div class="info-item info-item-inline">
+		      <input type="text" data-name="man" placeholder="" class="info-unit"></input>承担
+		      <input type="text" data-name="project" placeholder="" class="info-unit"></input>专业工程，
+		      占总工程量的<input type="text" data-name="percent" placeholder="" class="info-unit"></input>%;
+	      </div>
+	      <div class="info-item info-item-inline">
+		      <input type="text" data-name="man" placeholder="" class="info-unit"></input>承担
+		      <input type="text" data-name="project" placeholder="" class="info-unit"></input>专业工程，
+		      占总工程量的<input type="text" data-name="percent" placeholder="" class="info-unit"></input>%;
+	      </div>
+
+      </div>
+      
+      <div class="ctrl add">+</div>
+      <div class="ctrl del">-</div>
+
+      <div class="template">
+	      <div class="info-item info-item-inline">
+		      <input type="text" data-name="man" placeholder="" class="info-unit"></input>承担
+		      <input type="text" data-name="project" placeholder="" class="info-unit"></input>专业工程，
+		      占总工程量的<input type="text" data-name="percent" placeholder="" class="info-unit"></input>%;
+	      </div>
+      </div>
+
+    </div>
+
+    <button id="get3">获取数据</button>
+    <button id="set3">设置数据</button>
+    <div id="info-group2" class="info-group">
+    	<div class="info-group-body">
+	      <div class="info-item">
+		      <p>牵头人名称：<input type="text" data-name="man1" placeholder="" class="info-unit"></input>（盖单位章）</p>
+		      <p>法定代表人：<input type="text" data-name="man2" placeholder="" class="info-unit"></input>（签字）</p>
+	      </div>
+	      <div class="info-item">
+		      <p>成员一名称：<input type="text" data-name="man1" placeholder="" class="info-unit"></input>（盖单位章）</p>
+		      <p>法定代表人：<input type="text" data-name="man2" placeholder="" class="info-unit"></input>（签字）</p>
+	      </div>
+      </div>
+      
+      <div class="ctrl add">+</div>
+      <div class="ctrl del">-</div>
+
+      <div class="template">
+	      <div class="info-item">
+		      <p>###yx###名称：<input type="text" data-name="man1" placeholder="" class="info-unit"></input>（盖单位章）</p>
+		      <p>法定代表人：<input type="text" data-name="man2" placeholder="" class="info-unit"></input>（签字）</p>
+	      </div>
+      </div>
+
+    </div>
+
+    <h2>八、复杂表格</h2>
+    <button id="get4">获取数据</button>
+    <button id="set4">设置数据</button>
+    <div class="complex-table" id="complex-table">
+    	<div class="complex-table-content">
+    		<table>
+	    		<thead>
+	    			<tr>
+	    				<td data-name="index">序号</td>
+	    				<td data-name="name">姓名</td>
+	    				<td data-name="age">年龄</td>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<tr>
+	    				<td rowspan="2"><textarea></textarea></td>
+	    				<td><textarea></textarea></td>
+	    				<td><textarea></textarea></td>
+	    			</tr>
+	    			<tr>
+	    				<td><textarea></textarea></td>
+	    				<td><textarea></textarea></td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+    	</div>
+    	<table class="complex-table-template">
+    		<tbody>
+    			<tr>
+    				<td><textarea></textarea></td>
+    				<td><textarea></textarea></td>
+    				<td><textarea></textarea></td>
+    			</tr>
+    		</tbody>
+    	</table>
     </div>
   </div>
   
@@ -396,6 +532,49 @@
 
   		}
   		/*select组合选框*/
+
+  		/*增减'类表格'模式的输入框组*/
+  		var testData3 = [
+  			{"man":"1","project":"1","percent":"1"},
+  			{"man":"2","project":"2","percent":"2"}
+  		];
+  		var testData4 = [
+  			{"man1":"1","man2":"1"},
+  			{"man1":"2","man2":"2"}
+  		];
+  		$.GSForm.advanceInfoGroup('info-group');
+  		$('#get2').click(function(){
+				var data = $.GSForm.getInfoGroup('info-group');
+				alert(JSON.stringify(data));
+  		});
+  		$('#set2').click(function(){
+  			$.GSForm.setInfoGroup(testData3,'info-group');
+  		});
+
+  		$.GSForm.advanceInfoGroup('info-group2',['牵头人','成员一','成员二','成员三','成员四']);
+  		$('#get3').click(function(){
+				var data = $.GSForm.getInfoGroup('info-group2');
+				alert(JSON.stringify(data));
+  		});
+  		$('#set3').click(function(){
+  			$.GSForm.setInfoGroup(testData4,'info-group2',['牵头人','成员一','成员二','成员三','成员四']);
+  		});
+  		/*增减'类表格'模式的输入框组*/
+
+  		/*复杂表格*/
+  		var testData5 = [
+  		  {"index":"1","content":[{"name":"2","age":"3"},{"name":"4","age":"5"}]},
+  		  {"index":"2","content":[{"name":"6","age":"7"},{"name":"8","age":"9"}]}
+  		];
+  		$.GSForm.complexAdvanceTable('complex-table');
+  		$('#get4').click(function(){
+				var data = $.GSForm.getComplexAdvanceTable('complex-table');
+				alert(JSON.stringify(data));
+  		});
+  		$('#set4').click(function(){
+				var data = $.GSForm.setComplexAdvanceTable(testData5,'complex-table');
+  		});
+  		/*复杂表格*/
   	});
   </script>
 </body>

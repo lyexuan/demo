@@ -220,3 +220,55 @@ input[type="checkbox"].invalid:focus{
   background: #ffcdd2;
 }
 /*select组合选框*/
+
+/*可变条目内容组*/
+.info-group .info-group-body-inline,
+.info-group .info-item-inline{
+  display: inline;
+}
+.info-group .template{
+  display: none;
+}
+.info-group .ctrl{
+  display: inline;
+  padding: 3px 7px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.info-group .ctrl.add{
+  background: #b3e5fc;
+  margin-left: 5px;
+}
+.info-group .ctrl.del{
+  background: #ffcdd2;
+}
+/*可变条目内容组*/
+
+/*复杂表格*/
+.complex-table{
+  position: relative;
+}
+.complex-table-template{
+  display: none;
+}
+.complex-table .advance-table-btn{
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 60px;
+  height: 20px;
+  line-height: 20px;
+  color: #000;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+.complex-table .advance-table-btn-add{
+  background: #b3e5fc;
+  left: -60px;
+}
+.complex-table .advance-table-btn-del{
+  background: #ffcdd2;
+  right: -60px;
+}
+/*复杂表格*/

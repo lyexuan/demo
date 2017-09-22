@@ -273,6 +273,276 @@
 					return !$tr.parent().attr('id');
 				}
 			},
+			advanceInfoGroup: function(wrapId,moreInfo){
+				var $wrap = $('#' + wrapId),
+				    $ibody = $wrap.find('.info-group-body'),
+				    $btnAdd = $wrap.find('.add'),
+				    $btnDel = $wrap.find('.del'),
+				    template = $wrap.find('.template').html().replace(/text-placeholder/g,'');
+
+        //点击一组内容
+        $btnAdd.click(function(){
+        	var _template = template;
+        	if(moreInfo){
+        		var len = $ibody.find('.info-item').length;
+        		if(moreInfo[len]){
+        			_template = template.replace(/###yx###/g,moreInfo[len]);
+        		}else{
+        			alert('不能再增加更多了!');
+        			return false;
+        		}
+				  } 
+        	$ibody.append($(_template).removeClass('text-placeholder'));
+        });
+        //点击删除最后一组内容
+        $btnDel.click(function(){
+        	if($ibody.find('.info-item').length>1){
+        		$ibody.find('.info-item:last').remove();
+        	}
+        });				
+			},
+			getInfoGroup: function(id){
+				var data = [],
+				    $wrap = $('#' + id),
+				    $items = $wrap.find('.info-group-body').children('.info-item');
+        
+				$items.each(function(){
+					var $input = $(this).find('.info-unit'),
+					    item = {};
+					$input.each(function(){
+						var $this = $(this),
+						    key = $this.attr('data-name'),
+						    value = $this.val();
+            item[key] = value;
+					});    
+					data.push(item);
+				});
+				return data;
+			},
+			setInfoGroup: function(data,id,moreInfo){
+				var $wrap = $('#' + id),
+				    $ibody = $wrap.find('.info-group-body'),
+				    len = data.length,
+				    template = $wrap.find('.template').html().replace(/text-placeholder/g,''),
+				    _template = template,
+				    $template,
+				    temp = {};
+
+				$ibody.empty();    
+				if(len){
+					for(var i=0;i<len;i++){
+            temp = data[i];
+            if(moreInfo){
+        			_template = template.replace(/###yx###/g,moreInfo[i]);
+        		}
+          	$template = $(_template);
+            for(var _t in temp){
+            	
+            	$template.find('[data-name="' + _t + '"]').val(temp[_t]);
+            }
+            $ibody.append($template);
+					}
+				}
+
+			},
+			complexAdvanceTable: function(id){
+				var $wrap = $('#' + id),
+				    $table = $wrap.children('.complex-table-content').children('table'),
+				    $btnAdd = $('<div class="advance-table-btn advance-table-btn-add">增加一组</div>'),
+				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">删除该组</div>'),
+				    $btnAdd2 = $('<div class="advance-table-btn advance-table-btn-add">增加一行</div>'),
+				    $btnDel2 = $('<div class="advance-table-btn advance-table-btn-del">删除末行</div>'),
+				    template = $wrap.find('.complex-table-template').html();
+
+        //增加两个按钮，新增和删除
+        $wrap.append($btnAdd)
+             .append($btnDel)
+             .append($btnAdd2)
+             .append($btnDel2);
+        //点击新增按钮，增加一组
+        $btnAdd.click(function(){
+        	var $tbody = $wrap.find('.advance-table-current-tbody'),
+        	    $t = $(template).addClass('advance-table-current-tbody');
+        	$tbody.removeClass('advance-table-current-tbody');
+        	$tbody.after($t);
+        	refreshBtnPos();
+        });
+        //点击删除按钮，删除该组
+        $btnDel.click(function(){
+        	var $tbody = $wrap.find('.advance-table-current-tbody'),
+        	    $nextTbody = $tbody;
+          if(confirm('确认要删除该组？')){
+          	if($tbody.prev('tbody').length){
+	        		$nextTbody = $tbody.prev('tbody');
+	        	}else if($tbody.next('tbody').length){
+	        		$nextTbody = $tbody.next('tbody');
+	        	}else{
+	        		alert('至少要保留一组数据');
+	        		return false;
+	        	}
+	        	$tbody.remove();
+	        	$nextTbody.addClass('advance-table-current-tbody');
+	        	refreshBtnPos();
+          }
+        });
+        //点击新增按钮，增加一行
+        $btnAdd2.click(function(){
+        	var $tbody = $wrap.find('.advance-table-current-tbody'),
+        	    $t = $(template).find('tr'),
+        	    $tr = $tbody.find('tr:eq(0)'),
+        	    $td = $tr.find('td:eq(0)'),
+        	    rowspan = parseInt($td.attr('rowspan'));
+
+        	$t.find('td:eq(0)').remove();    
+        	$tbody.append($t);
+        	rowspan++;
+        	$td.attr('rowspan',rowspan);
+
+        	refreshBtnPos();
+        });
+        //点击删除按钮，删除末行
+        $btnDel2.click(function(){
+        	var $tbody = $wrap.find('.advance-table-current-tbody'),
+        	    $tr = $tbody.find('tr'),
+        	    $td = $tr.filter(':eq(0)').find('td:eq(0)'),
+        	    rowspan = parseInt($td.attr('rowspan'));
+
+          if(confirm('确定要删除该组的最后一行？')){
+          	if($tr.length>1){
+	        		rowspan--;
+	        		$td.attr('rowspan',rowspan);
+	            $tr.filter(':last').remove();
+	        		refreshBtnPos();
+	        	}else{
+	        		alert('该组只剩最后一行了');
+	        	}
+          }
+
+        });
+
+        //初始化控制按钮
+        $table.find('tbody:eq(0)').addClass('advance-table-current-tbody');
+        refreshBtnPos();
+
+        //文本域绑定点击事件
+        $('#' + id + ' textarea').live('click',function(){
+				//$textarea.click(function(){
+					var $this = $(this),
+					    $tr = $this.parents('tbody');
+
+					if(!$tr.hasClass('advance-table-current-tbody')){
+						$table.find('.advance-table-current-tbody').removeClass('advance-table-current-tbody');  
+						$tr.addClass('advance-table-current-tbody');  
+						refreshBtnPos();
+					}    	
+				}); 
+
+				//刷新按钮位置
+				function refreshBtnPos(){
+					var $cRow = $table.find('.advance-table-current-tbody'),
+					    top = 0,
+					    trHeight = 0,
+					    trHeight2 =0;
+					if($cRow.length){
+						//将按钮移动到合适的位置
+						top = $cRow.offset().top - $wrap.offset().top;
+						trHeight = $cRow.height() / 2 - 21;
+						trHeight2 = $cRow.height() / 2 + 1;
+
+						$btnAdd.css('top',top + trHeight);
+						$btnDel.css('top',top + trHeight);
+						$btnAdd2.css('top',top + trHeight2);
+						$btnDel2.css('top',top + trHeight2);
+					}
+				}   
+			},
+			getComplexAdvanceTable: function(id){
+				var data = [],
+				    $wrap = $('#' + id),
+				    $table = $wrap.find('.complex-table-content>table'),
+				    $thead = $table.find('thead'),
+				    $th = $thead.find('td'),
+				    $tbody = $table.find('tbody');
+				    names = [];
+
+				$th.each(function(){
+					names.push($(this).attr('data-name'));
+				});    
+        
+				$tbody.each(function(){
+					var $this = $(this),
+					    $tr = $this.children('tr'),
+					    item = {},
+					    name;
+
+					item.index = $tr.filter(':eq(0)').find('td:eq(0)').find('textarea').val();
+					item.content = [];
+
+					$tr.each(function(i){
+						var $this = $(this),
+						    $tds = $this.find('td'),
+						     _item = {};
+						/*if(i==0){
+							$tds = $tds.filter(':eq(0)');
+						}*/
+						$tds.each(function(j){
+            	var $this = $(this),
+            	    _name = names[j];
+            	if(!(i==0 && j==0)){
+            		if(i!=0){
+            			_name = names[j+1]
+            		}
+            		_item[_name] = $this.find('textarea').val();
+            	}    
+            	
+            });
+            item.content.push(_item);
+					});
+
+					data.push(item);
+					
+				});
+				return data;
+			},
+			setComplexAdvanceTable: function(data,id){
+				var len = data.length,
+				    $wrap = $('#' + id),
+				    $table = $wrap.find('.complex-table-content>table'),
+				    html = '',
+				    temp = {},
+				    index,
+				    content,
+				    innerLen = 0,
+				    innerTemp = {},
+				    currentClass = '';
+
+				for(var i=0;i<len;i++){
+					temp = data[i];
+					index = temp.index;
+					content = temp.content;
+					innerLen = content.length;
+					if(i==0){
+						currentClass = 'advance-table-current-tbody';
+					}else{
+						currentClass = '';
+					}
+					html += '<tbody class="'+currentClass+'">';
+					for(var j=0;j<innerLen;j++){
+						var tempContent = content[j];
+						html += '<tr>';
+						if(j==0){
+							html += '<td rowspan="'+innerLen+'"><textarea>'+index+'</textarea></td>';
+						}
+						for(var td in tempContent){
+							html += '<td><textarea>'+tempContent[td]+'</textarea></td>';
+						}
+						html += '</tr>';
+					}
+					html += '</tbody>';
+				}
+
+				$table.find('tbody').remove().end().append(html);
+			},
 			required: function(){
 				var $r = $('.required'),
 				    that = this;
