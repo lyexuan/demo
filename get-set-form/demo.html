@@ -85,6 +85,12 @@
 	  				<td>Boolean</td>
 	  				<td>对整个页面的必填项做校验，并且让第一个不通过验证的项获得焦点</td>
 	  			</tr>
+	  			<tr>
+	  				<td>$.GSForm.autoInputWidth()</td>
+	  				<td>无</td>
+	  				<td>无</td>
+	  				<td>-</td>
+	  			</tr>
 	  		</tbody>
 	  	</thead>
 	  </table>
@@ -192,6 +198,58 @@
 &lt;div class="pictures" id="pictures"&gt;&lt;/div&gt;</pre>
     <h3>3.脚本</h3>
     <p>参看demo中注释为'插入图片以及图片查看'的部分</p>
+
+    <h2>四、输入框自动增长</h2>
+    <p>文档加载好后执行如下代码即可：</p>
+    <pre>$.GSForm.autoInputWidth();</pre>
+
+    <h2>五、textarea自动增长</h2>
+    <p>默认显示3-5行，因此组件初始化的时候传一个最小高度进去，高度的数值是16的倍数，一行则是16，两行则是32，如：</p>
+    <pre>jQuery("textarea[class*=textarea]").TextAreaExpander(48);</pre>
+
+    <h2>六、select组合选框</h2>
+    <div class="group-select" id="group-select">
+	    <select class="" name="ZZLB1" id="ZZLB1" selectGroup="group0">
+	      <option value="请选择" group="group0">---请选择---</option>
+	      <option value="公路工程施工一级资质" group="group1">公路工程施工一级资质</option>
+        <option value="公路工程施工二级资质" group="group1">公路工程施工二级资质</option>
+        <option value="公路工程施工三级资质" group="group1">公路工程施工三级资质</option>
+        <option value="公路工程施工特级资质" group="group1">公路工程施工特级资质</option>
+        <option value="公路路基工程一级企业" group="group2">公路路基工程一级企业</option>
+        <option value="公路路基工程二级企业" group="group2">公路路基工程二级企业</option>
+        <option value="公路路基工程三级企业" group="group2">公路路基工程三级企业</option>
+        <option value="公路路面工程一级企业" group="group3">公路路面工程一级企业</option>
+        <option value="公路路面工程二级企业" group="group3">公路路面工程二级企业</option>
+        <option value="公路路面工程三级企业" group="group3">公路路面工程三级企业</option>
+        <option value="桥梁工程一级企业" group="group4">桥梁工程一级企业</option>
+        <option value="桥梁工程二级企业" group="group4">桥梁工程二级企业</option>
+        <option value="桥梁工程三级企业" group="group4">桥梁工程三级企业</option>
+        <option value="隧道工程一级企业" group="group5">隧道工程一级企业</option>
+        <option value="隧道工程二级企业" group="group5">隧道工程二级企业</option>
+        <option value="隧道工程三级企业" group="group5">隧道工程三级企业</option>
+	    </select>
+	    <select class="" name="ZZLB2" id="ZZLB2" style="display: none;" selectGroup="group0">
+	      <option value="请选择" group="group0">---请选择---</option>
+	      <option value="公路工程施工一级资质" group="group1">公路工程施工一级资质</option>
+        <option value="公路工程施工二级资质" group="group1">公路工程施工二级资质</option>
+        <option value="公路工程施工三级资质" group="group1">公路工程施工三级资质</option>
+        <option value="公路工程施工特级资质" group="group1">公路工程施工特级资质</option>
+        <option value="公路路基工程一级企业" group="group2">公路路基工程一级企业</option>
+        <option value="公路路基工程二级企业" group="group2">公路路基工程二级企业</option>
+        <option value="公路路基工程三级企业" group="group2">公路路基工程三级企业</option>
+        <option value="公路路面工程一级企业" group="group3">公路路面工程一级企业</option>
+        <option value="公路路面工程二级企业" group="group3">公路路面工程二级企业</option>
+        <option value="公路路面工程三级企业" group="group3">公路路面工程三级企业</option>
+        <option value="桥梁工程一级企业" group="group4">桥梁工程一级企业</option>
+        <option value="桥梁工程二级企业" group="group4">桥梁工程二级企业</option>
+        <option value="桥梁工程三级企业" group="group4">桥梁工程三级企业</option>
+        <option value="隧道工程一级企业" group="group5">隧道工程一级企业</option>
+        <option value="隧道工程二级企业" group="group5">隧道工程二级企业</option>
+        <option value="隧道工程三级企业" group="group5">隧道工程三级企业</option>
+	    </select>
+	    <div class="ctrl add">+</div>
+	    <div class="ctrl del" style="display: none;">-</div>
+    </div>
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
@@ -294,6 +352,67 @@
 			  }
 			}
   		/*插入图片以及图片查看*/
+
+  		/*输入框自动增长*/
+  		$.GSForm.autoInputWidth();
+  		/*输入框自动增长*/
+
+  		/*select组合选框*/
+  		/*var selectGroups = {
+  			"group1": ['公路工程施工一级资质','公路工程施工二级资质','公路工程施工三级资质','公路工程施工特级资质'],
+  			"group2": ['公路路基工程一级企业','公路路基工程二级企业','公路路基工程三级企业'],
+  			"group3": ['公路路面工程一级企业','公路路面工程二级企业','公路路面工程三级企业'],
+  			"group4": ['桥梁工程一级企业','桥梁工程二级企业','桥梁工程三级企业'],
+  			"group5": ['隧道工程一级企业','隧道工程三级企业','隧道工程四级企业']
+  		};*/
+
+  		initGroupSelect();
+  		function initGroupSelect(){
+  			var groupSelect = {
+	  			$s: $('#group-select'),
+	  			$s1: $('#group-select').children('select:eq(0)'),
+	  			$s2: $('#group-select').children('select:eq(1)'),
+	  			$add: $('#group-select').children('.add'),
+	  			$del: $('#group-select').children('.del')
+	  		};
+	  		groupSelect.$add.click(function(){
+	  			switchBtn(groupSelect.$del,groupSelect.$add);
+	  			groupSelect.$s2.show();
+	  		});
+	  		groupSelect.$del.click(function(){
+	  			groupSelect.$s2.hide();
+	  			switchBtn(groupSelect.$add,groupSelect.$del);
+	  		});
+
+	  		groupSelect.$s1.bind('select change',function(){
+	  			ctrlOption($(this),groupSelect.$s2);  			             
+	  		});
+	  		groupSelect.$s2.bind('select change',function(){
+	  			ctrlOption($(this),groupSelect.$s1);			             
+	  		});
+
+	  		function switchBtn($btnShow,$btnHide){
+	  			$btnHide.hide();
+	  			$btnShow.css('display','inline');
+	  		}
+
+	  		function ctrlOption($src,$dest){
+	  			var $this = $src,
+	  			    value = $this.val(),
+	  			    $op = $this.children('option:selected'),
+	  			    group = $op.attr('group'),
+	  			    $dop = $dest.children('option');
+
+	  			$this.attr('selectGroup',group);
+
+	  			$dop.attr('disabled',false);
+          if(group!=='group0'){
+          	$dop.filter('[group="' + group + '"]').attr('disabled',true);
+          }	
+	  		}
+
+  		}
+  		/*select组合选框*/
   	});
   </script>
 </body>

@@ -200,3 +200,21 @@ input[type="checkbox"].invalid:focus{
 
 }
 /*插入图片相关*/
+
+/*select组合选框*/
+.group-select{
+  display: inline;
+}
+.group-select .ctrl{
+  display: inline;
+  padding: 3px 7px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.group-select .ctrl.add{
+  background: #b3e5fc;
+}
+.group-select .ctrl.del{
+  background: #ffcdd2;
+}
+/*select组合选框*/

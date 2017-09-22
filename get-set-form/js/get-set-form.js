@@ -199,17 +199,18 @@
         $btnDel.click(function(){
         	var $tr = $table.find('.advance-table-current-row'),
         	    $nextTr;
-
-        	if($tr.prev('tr').length){
-        		$nextTr = $tr.prev('tr');
-        	}else if($tr.next('tr').length){
-        		$nextTr = $tr.next('tr');
-        	}else{
-        		$nextTr = $tbody.prev('tbody').children('tr');
-        	}
-        	$tr.remove();
-        	$nextTr.addClass('advance-table-current-row');
-        	refreshBtnPos();
+          if(confirm('确认要删除该行？')){
+          	if($tr.prev('tr').length){
+	        		$nextTr = $tr.prev('tr');
+	        	}else if($tr.next('tr').length){
+	        		$nextTr = $tr.next('tr');
+	        	}else{
+	        		$nextTr = $tbody.prev('tbody').children('tr');
+	        	}
+	        	$tr.remove();
+	        	$nextTr.addClass('advance-table-current-row');
+	        	refreshBtnPos();
+          }
         });
 
         //初始化控制按钮
@@ -284,7 +285,7 @@
 				    $this = $e,
 					  tagName = $this[0].tagName.toUpperCase(),
 					  tagType = '',
-					  msg = '<div style="background: #f44336;color: #fff;position: absolute;padding: 2px 7px;font-size: 12px;border-radius: 4px;margin-left: 15px;"><div style="position: absolute;left: -12px;top: 50%;margin-top: -6px;width: 0;height: 0;border-width: 6px;border-style: solid;border-color: transparent #f44336 transparent transparent;"></div>必填项</div>',
+					  msg = '<div style="background: #f44336;color: #fff;position: absolute;padding: 2px 7px;font-size: 12px;border-radius: 4px;margin-left: 30px;text-indent: 0;"><div style="position: absolute;left: -12px;top: 50%;margin-top: -6px;width: 0;height: 0;border-width: 6px;border-style: solid;border-color: transparent #f44336 transparent transparent;"></div>必填项</div>',
 					  $msg = $(msg);
 
 			  if(tagName === 'INPUT'){
@@ -372,6 +373,8 @@
 				return isValid;
 			},
 			autoInputWidth: function(){
+				$('body').append('<div id="countInputWidth" style="position: absolute; top: -1000px;left: -1000px;"></div>');
+
 				//设置原始长度属性值
 				$('input[type="text"]').each(function(){
 					var $this = $(this),
@@ -384,19 +387,24 @@
 				$('input[type="text"]').bind('input propertychange', function(){
 					var $this = $(this),
 					    oriWidth = $this.attr('oriWidth'),
-					    value = $this.value(),
-					    $span = ('<span style="position: absolute; top: -1000px;left: -1000px;">' + value + '</span>'),
-					    newWidth = oriWidth;
+					    value = $this.val(),
+					    $span = $('<span>' + value + '</span>'),
+					    newWidth = oriWidth,
+					    $ci = $('#countInputWidth');
 
-          $('body').append($span);
-          newWidth = = $span.width() + 16;
+          
+          $ci.append($span);
+          
+         
+          newWidth = $span.width() + 16;
+          $span.remove();
 					//用一个模拟的span去获取内容的宽度，和初始宽度比对，超多初始宽度则拓宽input否则还原原始长度
-					if(oriWidth<newWidth){
+					if(oriWidth<newWidth && !$this.hasClass('text-placeholder')){
             $this.width(newWidth - 16);
 					}else{
 						$this.width(oriWidth - 16);
 					}
-					$span.remove();
+					
         });
 			}
 		}
