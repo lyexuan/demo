@@ -3,7 +3,6 @@
 <head>
 	<title>get-set-form</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="js/jquery-foxibox-0.2/style/jquery-foxibox-0.2.css">
 	<link rel="stylesheet" href="css/templet.css">
 	<style>
 		thead th{
@@ -184,20 +183,7 @@
 
     <h2>四、插入图片</h2>
     <div class="btn-add-img" id="btn-add-img">插入图片</div>
-    <div class="pictures" id="pictures"></div> 
-
-    <p>使用说明：</p>
-    <h3>1.引入文件</h3> 
-    <ul>
-    	<li>jquery-foxibox-0.2/style/jquery-foxibox-0.2.css</li>
-    	<li>jquery-foxibox-0.2/script/jquery-foxibox-0.2.min.js</li>
-    </ul>
-    <p>注：整个插件的目录结构不要去改变</p>
-    <h3>2.html</h3>
-    <pre>&lt;div class="btn-add-img" id="btn-add-img"&gt;插入图片&lt;/div&gt;
-&lt;div class="pictures" id="pictures"&gt;&lt;/div&gt;</pre>
-    <h3>3.脚本</h3>
-    <p>参看demo中注释为'插入图片以及图片查看'的部分</p>
+    <div class="pictures" id="pictures"></div>    
 
     <h2>四、输入框自动增长</h2>
     <p>文档加载好后执行如下代码即可：</p>
@@ -253,7 +239,6 @@
   </div>
   
   <script src="js/jquery-1.4.2.min.js"></script>
-  <script src="js/jquery-foxibox-0.2/script/jquery-foxibox-0.2.min.js"></script>
 	<script src="js/get-set-form.js"></script>
 	<script src="js/jquery.textPlaceholder.js"></script>
 	<script src="js/json2.js"></script>
@@ -307,29 +292,27 @@
   		/*插入图片以及图片查看*/
   		$('#btn-add-img').click(function(){
   			/*测试*/
+  			testAddImage();
+  			/*测试*/
+
+  			/*正式使用*/
+        //AddImage('BidderBasicInfo.Img');
+  			/*正式使用*/
+  		});
+
+  		function testAddImage(){
   			var html = '',
   			    $html;
   			for(var i=1;i<=5;i++){
-  				html += '<div class="picture-item"><a href="img/img-' + i + '.jpg" rel="[gall1]"><img src="img/img-' + i + '.jpg"></a><span class="btn-del-img"></span></div>'
+  				html += '<div class="picture-item"><img src="img/img-' + i + '.jpg"><div class="btn-container"><span class="btn-del-img">删除</span></div></div>'
   			}
-  			$('#foxibox_overlay,#foxibox_loader,#foxibox_container,#foxibox_details').remove();
-
-  			//AddImage('BidderBasicInfo.Img');
 
   			$html = $(html);
   			$html.find('.btn-del-img').click(function(){
   				alert('删除');
   			});
   			$('#pictures').append($html);
-  			$('#pictures a').foxibox();
-  			/*测试*/
-
-  			/*正式使用*/
-  			//$('#foxibox_overlay,#foxibox_loader,#foxibox_container,#foxibox_details').remove();
-        //AddImage('BidderBasicInfo.Img');
-        //$('#pictures a').foxibox();
-  			/*正式使用*/
-  		});
+  		}
 
   		function AddImage(imgAttribute) {
 			  var imgValue = window.external.AddImage();
@@ -339,14 +322,14 @@
 	        //width:sizeArry[2]
 	        //height:sizeArry[3]
 	        //DelImgPath:sizeArry[1]
-	        var html = '<div class="picture-item"><a href="' + sizeArry[0] + '" rel="[gall1]"><img src="' + sizeArry[0] + '"></a><span class="btn-del-img" delImgPath="' + sizeArry[1] + '"></span></div>';
+	        var html = '<div class="picture-item"><img src="' + sizeArry[0] + '"><div class="btn-container"><span class="btn-del-img" delImgPath="' + sizeArry[1] + '">删除</span></div></div>';
           var $html = $(html);
           $html.find('.btn-del-img').click(function(){
 	  				var $this = $(this),
 	  				    delImgPath = $this.attr('delImgPath');
 
 	  				window.external.DeleteImg(delImgPath);
-	  				$this.parent().remove();
+	  				$this.parent().parent().remove();
 	  			});
           $('#pictures').append($html);
 			  }

@@ -178,26 +178,28 @@ input[type="checkbox"].invalid:focus{
   margin-right: 10px;
   margin-bottom: 10px;
   position: relative;
-  width: 100px;
-  height: 100px;
   border: 1px solid #ccc;
 }
 .pictures a{
   
 }
 .pictures img{
-  width: 100px;
-  height: 100px;
   border: none;
 }
-.btn-del-img{
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 25px;
-  height: 25px;
-  background: url("../img/del-img.png") no-repeat center;
-
+.pictures .btn-container{
+  padding: 4px 8px;
+  background: #eee;
+  text-align: right;
+}
+.pictures .btn-del-img{
+  display: inline-block;
+  width: 50px;
+  padding: 2px 0;
+  background: #f44336;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
 }
 /*插入图片相关*/
 
