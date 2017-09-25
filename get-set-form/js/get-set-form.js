@@ -193,6 +193,9 @@
         	}else{
             $tr.after($t);
         	}
+        	if($.fn.TextAreaExpander){
+        		$t.find('textarea').TextAreaExpander(72);
+        	}
         	refreshBtnPos();
         });
         //点击删除按钮
