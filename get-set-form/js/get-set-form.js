@@ -670,7 +670,7 @@
           
          
           newWidth = $span.width();
-          console.log(newWidth);
+          
           $span.remove();
 					//用一个模拟的span去获取内容的宽度，和初始宽度比对，超多初始宽度则拓宽input否则还原原始长度
 					if(oriWidth<newWidth && !$this.hasClass('text-placeholder')){

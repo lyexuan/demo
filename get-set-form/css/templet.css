@@ -44,8 +44,10 @@ textarea{
 }
 
 input[type="text"]{
-  border: none;
-  border-bottom: 1px solid #999;
+  border: 1px solid #999;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
   width: 80px;
   padding-left: 8px;
   padding-right: 8px;
