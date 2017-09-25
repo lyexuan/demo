@@ -161,6 +161,10 @@
 					}
 					$tbody1.html(html1);
 					$tbody2.html(html2);
+					if($.fn.TextAreaExpander){
+        		$tbody1.find('textarea').TextAreaExpander(72);
+        		$tbody2.find('textarea').TextAreaExpander(72);
+        	}
 				}
 			},
 			advanceTable: function(tableId){
