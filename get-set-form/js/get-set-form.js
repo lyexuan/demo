@@ -615,9 +615,12 @@
 						"left": $this.offset().left + $this.width()
 					});
 					$this.after($msg);
-					$msg.fadeOut(5000,function(){
+					/*$msg.fadeOut(5000,function(){
 						$msg.remove();
-					});
+					});*/
+					setTimeout(function(){
+						$msg.remove();
+					},3000);
 				}
 
 				return isValid;
@@ -648,7 +651,7 @@
 				//设置原始长度属性值
 				$('input[type="text"]').each(function(){
 					var $this = $(this),
-					    width = $this.width() + 16;
+					    width = $this.width();
 
 					$this.attr('oriWidth',width);
 				});
@@ -666,13 +669,14 @@
           $ci.append($span);
           
          
-          newWidth = $span.width() + 16;
+          newWidth = $span.width();
+          console.log(newWidth);
           $span.remove();
 					//用一个模拟的span去获取内容的宽度，和初始宽度比对，超多初始宽度则拓宽input否则还原原始长度
 					if(oriWidth<newWidth && !$this.hasClass('text-placeholder')){
-            $this.width(newWidth - 16);
+            $this.width(newWidth);
 					}else{
-						$this.width(oriWidth - 16);
+						$this.width(oriWidth);
 					}
 					
         });

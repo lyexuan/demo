@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/templet.css">
 	<style>
-	  body{
-	  	font-family: 'Microsoft Yahei';
-	  }
+	  /* body{
+      font-family: 'Microsoft Yahei';
+    } */
 		thead th{
 			border-bottom: 1px solid #000;
 		}
@@ -187,7 +187,7 @@
 	  </p>
 	  <p>
 	  	textarea:
-	  	<textarea name="test.textarea" id="test.textarea" class="required"></textarea>
+	  	<textarea name="test.textarea" id="test.textarea" class="required body-textarea"></textarea>
 	  </p>
 
 	  <table id="divMenu">
@@ -376,7 +376,8 @@
   
   <script src="js/jquery-1.4.2.min.js"></script>
 	<script src="js/get-set-form.js"></script>
-	<script src="js/jquery.textPlaceholder.js"></script>
+	<script src="js/jquery.textarea-expander.js"></script>
+  <script src="js/jquery.textPlaceholder.js"></script>
 	<script src="js/json2.js"></script>
 	
   <script>
@@ -475,6 +476,10 @@
   		/*输入框自动增长*/
   		$.GSForm.autoInputWidth();
   		/*输入框自动增长*/
+
+      /*textarea自动增高*/
+      $('textarea').TextAreaExpander(72);
+      /*textarea自动增高*/
 
   		/*select组合选框*/
   		/*var selectGroups = {
@@ -575,6 +580,15 @@
 				var data = $.GSForm.setComplexAdvanceTable(testData5,'complex-table');
   		});
   		/*复杂表格*/
+
+      /*textarea宽度调节*/
+      $('.body-textarea').each(function(){
+        var $this = $(this),
+            width = $this.width();
+
+        $this.width(width - 22);
+      });
+      /*textarea宽度调节*/
   	});
   </script>
 </body>

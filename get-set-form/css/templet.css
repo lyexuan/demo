@@ -1,11 +1,15 @@
 ﻿/* 1.正文宋体小四 */
-body{
+body,
+input,
+textarea{
     font-family: "SimSun";
     font-size: 16px;
     /* 3.行间距1.5倍 */
     line-height: 1.5;
-    /* 11.所有HTML页面，左右留白等宽像素（参考WORD的页边距） */
-    padding: 0 10%;
+}
+body{
+  /* 11.所有HTML页面，左右留白等宽像素（参考WORD的页边距） */
+  padding: 0 10%;
 }
 
 /* 2.标题 黑体 三号、小三、四号（三层级） */
@@ -32,9 +36,11 @@ p{
 }
 /* 5.textarea边框颜色淡一点 */
 textarea{  
-  width: 90%;
+  width: 100%;
+  display: block;
   overflow: hidden;
   border: 1px solid #999;
+  padding: 10px;
 }
 
 input[type="text"]{
@@ -43,6 +49,8 @@ input[type="text"]{
   width: 80px;
   padding-left: 8px;
   padding-right: 8px;
+  font-size: 16px;
+  font-family: "SimSun";
 }
 
 table{
@@ -53,15 +61,17 @@ table{
 }
 td{
   border: 1px solid #999;
-  padding: 8px;
+  padding: 16px;
 }
 thead td,
 thead th{
-  font-weight: 700;
+  text-align: center;
 }
 table textarea{
   border: 0px;
   overflow: auto;
+  padding: 0;
+  width: 100%;
 }
 
 .padding-left-div{
