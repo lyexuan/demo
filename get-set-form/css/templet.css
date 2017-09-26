@@ -53,6 +53,7 @@ input[type="text"]{
   padding-right: 8px;
   font-size: 16px;
   font-family: "SimSun";
+  line-height: 1;
 }
 
 table{
