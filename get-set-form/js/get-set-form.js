@@ -664,7 +664,7 @@
 				});
 
 				//给输入框绑定值改变的事件
-				$('input[type="text"]').bind('keyup', function(){
+				$('input[type="text"]').bind('input propertychange', function(){
 					var $this = $(this),
 					    oriWidth = $this.attr('oriWidth'),
 					    value = $this.val(),
