@@ -101,6 +101,7 @@
 							}
 
 							if(tagName==='TEXTAREA'){
+								$input.removeClass('text-placeholder');
 								$input.val(value);
 							}
 							
