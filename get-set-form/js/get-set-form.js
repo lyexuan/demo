@@ -161,9 +161,16 @@
 					}
 					$tbody1.html(html1);
 					$tbody2.html(html2);
-					if($.fn.TextAreaExpander){
+					/*if($.fn.TextAreaExpander){
         		$tbody1.find('textarea').TextAreaExpander(72);
         		$tbody2.find('textarea').TextAreaExpander(72);
+        	}*/
+        	//填充完值之后，重新绑定一下TextAreaExpander
+        	if($.fn.TextAreaExpander){
+        		//$t.find('textarea').TextAreaExpander(72);
+        		setTimeout(function(){
+        			$('textarea').TextAreaExpander(72);
+        		},1000);
         	}
 				}
 			},
@@ -185,6 +192,8 @@
         $advanceTable = $('#advance-table');
 
         //增加两个按钮，新增和删除
+        $('.advance-table-btn-add').remove();//显示按钮之前先移除先前的按钮
+        $('.advance-table-btn-del').remove();//显示按钮之前先移除先前的按钮
         $advanceTable.append($btnAdd)
                      .append($btnDel);
         //点击新增按钮，增加一行
@@ -197,8 +206,12 @@
         	}else{
             $tr.after($t);
         	}
+        	//新增完行之后，重新绑定一下TextAreaExpander
         	if($.fn.TextAreaExpander){
-        		$t.find('textarea').TextAreaExpander(72);
+        		//$t.find('textarea').TextAreaExpander(72);
+        		setTimeout(function(){
+        			$('textarea').TextAreaExpander(72);
+        		},1000);
         	}
         	refreshBtnPos();
         });
