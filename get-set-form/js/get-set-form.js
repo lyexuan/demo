@@ -7,12 +7,16 @@
 				    $radio = $('input[type="radio"]:checked'),
 				    $checkbox = $('input[type="checkbox"]'),
 				    $select = $('select'),
-				    $textarea = $('textarea');
+				    $textarea = $('textarea'),
+				    $imgItems = $('.picture-item'),
+				    imgs = [],
+				    pre = '';
 
 				$text.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 && !$this.hasClass('text-placeholder')){
+						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -22,7 +26,8 @@
 					    id = $this.attr('id'),
 					    name,
 					    $radio;
-					if( id && id.indexOf('.')!==-1 ){						
+					if( id && id.indexOf('.')!==-1 ){			
+					  pre = id.split('.')[0];			
 						name = $this.attr('name');
 					  data.push({name: name,value: id});					  
 					}
@@ -32,6 +37,7 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 && $this.attr('checked')){
+						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -40,6 +46,7 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
+						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -48,9 +55,22 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
+						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
+
+				$imgItems.each(function(){
+					var $this = $(this),
+					    $img = $this.children('img'),
+					    src = $img.attr('src');
+					imgs.push(src);    
+				});
+
+				if(imgs.length && pre){
+					pre += '.image';
+					data.push({name:pre,value:imgs.join(',')});
+				}
 
 				return data;
 			},
