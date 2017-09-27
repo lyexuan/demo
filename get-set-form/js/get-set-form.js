@@ -722,6 +722,109 @@
 					}
 					
         });
+			},
+			advanceEasyTable: function(tbodyId,templateId,callback){
+				var $tbody = $('#' + tbodyId),
+				    $table = $tbody.parents('table'),
+				    $wrap = $table.parents('.advance-table-wrap'),
+				    $textarea = $table.find('textarea:visible'),
+				    $template = $('#' + templateId),
+				    $btnAdd = $('<div class="js-advance-easy-table-btn advance-table-btn advance-table-btn-add">+</div>'),
+				    $btnDel = $('<div class="js-advance-easy-table-btn advance-table-btn advance-table-btn-del">-</div>'),
+				    template = '';
+
+        callback = $.extend({}, {
+        	afterCreateBtn: function($btnAdd,$btnDel){},
+        	afterAddRow   : function(){},
+        	afterDelRow   : function(){}
+        }, callback);
+        
+				//获取模板
+				template = $template.find('tbody').html().replace(/id="[^"]*"/,'');
+
+			  //增加两个按钮，新增和删除
+        $('.js-advance-easy-table-btn').remove();//显示按钮之前先移除先前的按钮
+
+        $wrap.append($btnAdd)
+             .append($btnDel);
+        callback.afterCreateBtn($btnAdd,$btnDel);
+
+        //点击新增按钮，增加一行
+        $btnAdd.click(function(){
+        	var $tr = $tbody.find('.advance-table-current-row'),
+        	    $t = $(template).addClass('advance-table-current-row');
+        	$tr.removeClass('advance-table-current-row');
+
+          $tr.after($t);
+
+        	if ($.fn.TextAreaExpander) {
+        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	}
+        	refreshBtnPos();
+
+        	callback.afterAddRow();
+        });
+        //点击删除按钮
+        $btnDel.click(function(){
+        	var $tr = $table.find('.advance-table-current-row'),
+        	    $nextTr;
+          if(confirm('确认要删除该行？')){
+          	if($tr.prev('tr').length){
+	        		$nextTr = $tr.prev('tr');
+	        		$tr.remove();
+	        	  $nextTr.addClass('advance-table-current-row');
+	        	  refreshBtnPos();
+	        	}else if($tr.next('tr').length){
+	        		alert('第一行不能删除');
+	        	}
+	        	
+          }
+        });
+
+        //初始化控制按钮
+        $tbody.children('tr:eq(0)').addClass('advance-table-current-row');
+        refreshBtnPos();
+
+        //文本域绑定点击事件
+        $('#' + tbodyId + ' textarea').live('click',function(){
+					var $this = $(this),
+					    $tr = $this.parents('tr');
+
+					if(!$tr.hasClass('advance-table-current-row')){
+						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
+						$tr.addClass('advance-table-current-row');  
+						refreshBtnPos();
+					}    	
+				}); 
+
+				//刷新按钮位置
+				function refreshBtnPos(){
+					var $cRow = $table.find('.advance-table-current-row'),
+					    top = 0,
+					    trHeight = 0;
+					if($cRow.length){
+						//将按钮移动到合适的位置
+						top = $cRow.offset().top - $table.offset().top;
+						trHeight = $cRow.height() / 2 - 15;
+						top += trHeight;
+						hideBtn();
+						$btnAdd.css('top',top);
+						$btnDel.css('top',top);
+						showBtn();
+					}else{
+						hideBtn();
+					}
+				}   
+				//显示按钮
+				function showBtn(){
+					$btnAdd.show();
+					$btnDel.show();
+				}
+				//隐藏按钮
+				function hideBtn(){
+					$btnAdd.hide();
+					$btnDel.hide();
+				}
 			}
 		}
 	});

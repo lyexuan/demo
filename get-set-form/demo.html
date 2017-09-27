@@ -130,6 +130,19 @@
   				<td>无</td>
   				<td>初始化复杂表格的数据</td>
   			</tr>
+        <tr>
+          <td>$.GSForm.advanceEasyTable(tbodyId,templateId,callback)</td>
+          <td>目标tbody的id，模板的id，回调函数对象集合</td>
+          <td>无</td>
+          <td>
+            <p>回调函数对象包括:</p>
+            <ul>
+              <li>afterCreateBtn: function($btnAdd,$btnDel){}</li>
+              <li>afterAddRow: function(){}</li>
+              <li>afterDelRow: function(){}</li>
+            </ul>
+          </td>
+        </tr>
   		</tbody>
 	  	
 	  </table>
@@ -225,15 +238,15 @@
     <div class="pictures" id="pictures"></div> 
     <div class="btn-add-img" id="btn-add-img" target="pictures">插入图片</div>   
 
-    <h2>四、输入框自动增长</h2>
+    <h2>五、输入框自动增长</h2>
     <p>文档加载好后执行如下代码即可：</p>
     <pre>$.GSForm.autoInputWidth();</pre>
 
-    <h2>五、textarea自动增长</h2>
+    <h2>六、textarea自动增长</h2>
     <p>默认显示3-5行，因此组件初始化的时候传一个最小高度进去，高度的数值是16的倍数，一行则是16，两行则是32，如：</p>
     <pre>jQuery("textarea[class*=textarea]").TextAreaExpander(48);</pre>
 
-    <h2>六、select组合选框</h2>
+    <h2>七、select组合选框</h2>
     <div class="group-select" id="group-select">
 	    <select class="" name="ZZLB1" id="ZZLB1" selectGroup="group0">
 	      <option value="请选择" group="group0">---请选择---</option>
@@ -277,7 +290,7 @@
 	    <div class="ctrl del" style="display: none;">-</div>
     </div>
 
-    <h2>七、增减'类表格'模式的输入框组</h2>
+    <h2>八、增减'类表格'模式的输入框组</h2>
     <button id="get2">获取数据</button>
     <button id="set2">设置数据</button>
     <div id="info-group" class="info-group">
@@ -336,7 +349,7 @@
 
     </div>
 
-    <h2>八、复杂表格</h2>
+    <h2>九、复杂表格</h2>
     <button id="get4">获取数据</button>
     <button id="set4">设置数据</button>
     <div class="complex-table" id="complex-table">
@@ -373,7 +386,41 @@
     	</table>
     </div>
 
-    <h2>九、表格新增一行简易脚本，带回调</h2>
+    <h2>十、表格新增一行简易脚本，带回调</h2>
+    <div class="advance-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <td>序号</td>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>描述</td>
+          </tr>
+        </thead>
+        <tbody id="easy-tbody">
+          <tr>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td rowspan="2"><textarea></textarea></td>
+          </tr>
+          <tr>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+      <table id="easy-table" style="display: none;">
+        <tbody>
+          <tr>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 
@@ -607,6 +654,30 @@
         $this.width(width - 22);
       });
       /*textarea宽度调节*/
+
+      /*表格新增一行简易脚本，带回调*/
+      $.GSForm.advanceEasyTable('easy-tbody','easy-table',{
+        afterCreateBtn: function($btnAdd,$btnDel){
+          var $tbody = $('#easy-tbody'),
+              $td = $('#easy-tbody>tr:first>td:last'),
+              rowspan = parseInt($td.attr('rowspan'));
+          
+          $btnDel.css({'right':'auto','left':$td.offset().left - $tbody.offset().left + 1});    
+        },
+        afterAddRow   : function(){
+          var $td = $('#easy-tbody>tr:first>td:last'),
+              rowspan = parseInt($td.attr('rowspan'));
+
+          $td.attr('rowspan',++rowspan);
+        },
+        afterDelRow   : function(){
+          var $td = $('#easy-tbody>tr:first>td:last'),
+              rowspan = parseInt($td.attr('rowspan'));
+
+          $td.attr('rowspan',--rowspan);
+        }
+      });
+      /*表格新增一行简易脚本，带回调*/
   	});
   </script>
 </body>

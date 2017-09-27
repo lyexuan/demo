@@ -285,9 +285,13 @@ input[type="checkbox"].invalid:focus{
   background: #ffcdd2;
   right: -60px;
 }
-/*复杂表格*/
 
+/*复杂表格*/
+.advance-table-wrap{
+  position: relative;
+}
 /*强行修复一些样式*/
 table{
   border-bottom: 1px solid #999;
 }
+/*强行修复一些样式*/
