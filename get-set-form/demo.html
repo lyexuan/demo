@@ -223,7 +223,7 @@
 
     <h2>四、插入图片</h2>
     <div class="pictures" id="pictures"></div> 
-    <div class="btn-add-img" id="btn-add-img">插入图片</div>   
+    <div class="btn-add-img" id="btn-add-img" target="pictures">插入图片</div>   
 
     <h2>四、输入框自动增长</h2>
     <p>文档加载好后执行如下代码即可：</p>
@@ -427,17 +427,27 @@
   		/*placeholder*/
 
   		/*插入图片以及图片查看*/
-  		$('#btn-add-img').click(function(){
+  		$('.btn-add-img').click(function(){
+        var $this = $(this),
+            target = $this.attr('target');
   			/*测试*/
-  			testAddImage();
+  			testAddImage(target);
   			/*测试*/
 
   			/*正式使用*/
-        //AddImage('BidderBasicInfo.Img');
+        //AddImage(target,'BidderBasicInfo.Img');
   			/*正式使用*/
   		});
+      $('.btn-del-img').click(function(){
+        var $this = $(this),
+            delImgPath = $this.attr('delImgPath');
+        if(confirm('确定要删除该图片?')){
+          window.external.DeleteImg(delImgPath);
+          $this.parent().parent().remove();
+        }
+      });
 
-  		function testAddImage(){
+  		function testAddImage(target){
   			var html = '',
   			    $html;
   			for(var i=1;i<=5;i++){
@@ -446,31 +456,36 @@
 
   			$html = $(html);
   			$html.find('.btn-del-img').click(function(){
-  				alert('删除');
+          if(confirm('确定要删除该图片?')){
+            alert('删除');
+          }
   			});
-  			$('#pictures').append($html);
+  			$('#' + target).append($html);
   		}
 
-  		function AddImage(imgAttribute) {
-			  var imgValue = window.external.AddImage();
-			  if (imgValue != "") {
-	        var sizeArry = imgValue.split(',');
-	        //src:sizeArry[0]
-	        //width:sizeArry[2]
-	        //height:sizeArry[3]
-	        //DelImgPath:sizeArry[1]
-	        var html = '<div class="picture-item"><img src="' + sizeArry[0] + '"><div class="btn-container"><span class="btn-del-img" delImgPath="' + sizeArry[1] + '">删除</span></div></div>';
-          var $html = $(html);
-          $html.find('.btn-del-img').click(function(){
-	  				var $this = $(this),
-	  				    delImgPath = $this.attr('delImgPath');
-
-	  				window.external.DeleteImg(delImgPath);
-	  				$this.parent().parent().remove();
-	  			});
-          $('#pictures').append($html);
-			  }
-			}
+  		//插入图片
+      function AddImage(divId) {
+        var imgValue = window.external.AddImage(divId);
+        if (imgValue != "") {
+          var sizeArry = imgValue.split(',');
+          //src:sizeArry[0],width:sizeArry[2],height:sizeArry[3],DelImgPath:sizeArry[1]
+          appendImage(divId,sizeArry[0]);
+        }
+      }
+      //在给定的容器中增加一个图片
+      function appendImage(divId,imagePath){
+        var html = '<div class="picture-item"><img src="' + imagePath + '"><div class="btn-container"><span class="btn-del-img" delImgPath="' + imagePath + '">删除</span></div></div>';
+        var $html = $(html);
+        $html.find('.btn-del-img').click(function(){
+          var $this = $(this),
+          delImgPath = $this.attr('delImgPath');
+          if(confirm('确定要删除该图片?')){
+            window.external.DeleteImg(delImgPath);
+            $this.parent().parent().remove();
+          }
+        });
+        $('#' + divId).append($html); 
+      }
   		/*插入图片以及图片查看*/
 
   		/*输入框自动增长*/

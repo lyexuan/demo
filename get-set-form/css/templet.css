@@ -182,6 +182,7 @@ input[type="checkbox"].invalid:focus{
   text-align: center;
   cursor: pointer;
   margin-bottom: 14px;
+  margin-top: 14px;
 }
 .pictures{
   overflow: hidden;

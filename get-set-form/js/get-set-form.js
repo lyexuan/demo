@@ -172,8 +172,8 @@
 				    $tbody = $('#addtr'),
 				    $textarea = $table.find('textarea:visible'),
 				    $advanceTable = null,
-				    $btnAdd = $('<div class="advance-table-btn advance-table-btn-add">+</div>'),
-				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">-</div>'),
+				    $btnAdd = $('<div class="js-advance-table-btn advance-table-btn advance-table-btn-add">+</div>'),
+				    $btnDel = $('<div class="js-advance-table-btn advance-table-btn advance-table-btn-del">-</div>'),
 				    template = '';
 
 				//获取模板
@@ -185,8 +185,8 @@
         $advanceTable = $('#advance-table');
 
 			  //增加两个按钮，新增和删除
-        $('.advance-table-btn-add').remove();//显示按钮之前先移除先前的按钮
-        $('.advance-table-btn-del').remove();//显示按钮之前先移除先前的按钮
+        $('.js-advance-table-btn-add').remove();//显示按钮之前先移除先前的按钮
+
         $advanceTable.append($btnAdd)
                      .append($btnDel);
 
@@ -360,13 +360,14 @@
 			complexAdvanceTable: function(id){
 				var $wrap = $('#' + id),
 				    $table = $wrap.children('.complex-table-content').children('table'),
-				    $btnAdd = $('<div class="advance-table-btn advance-table-btn-add">增加一组</div>'),
-				    $btnDel = $('<div class="advance-table-btn advance-table-btn-del">删除该组</div>'),
-				    $btnAdd2 = $('<div class="advance-table-btn advance-table-btn-add">增加一行</div>'),
-				    $btnDel2 = $('<div class="advance-table-btn advance-table-btn-del">删除末行</div>'),
+				    $btnAdd = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一组</div>'),
+				    $btnDel = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除该组</div>'),
+				    $btnAdd2 = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一行</div>'),
+				    $btnDel2 = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除末行</div>'),
 				    template = $wrap.find('.complex-table-template').html();
 
         //增加两个按钮，新增和删除
+        $('.js-complex-advance-table-btn').remove();//显示按钮之前先移除先前的按钮
         $wrap.append($btnAdd)
              .append($btnDel)
              .append($btnAdd2)
@@ -376,6 +377,9 @@
         	var $tbody = $wrap.find('.advance-table-current-tbody'),
         	    $t = $(template).addClass('advance-table-current-tbody');
         	$tbody.removeClass('advance-table-current-tbody');
+        	if ($.fn.TextAreaExpander) {
+        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	}
         	$tbody.after($t);
         	refreshBtnPos();
         });
@@ -405,7 +409,10 @@
         	    $td = $tr.find('td:eq(0)'),
         	    rowspan = parseInt($td.attr('rowspan'));
 
-        	$t.find('td:eq(0)').remove();    
+        	$t.find('td:eq(0)').remove(); 
+        	if ($.fn.TextAreaExpander) {
+        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	}   
         	$tbody.append($t);
         	rowspan++;
         	$td.attr('rowspan',rowspan);
@@ -554,6 +561,9 @@
 				}
 
 				$table.find('tbody').remove().end().append(html);
+				if ($.fn.TextAreaExpander) {
+				  $('textarea').TextAreaExpander(72);
+      	}
 			},
 			required: function(){
 				var $r = $('.required'),
