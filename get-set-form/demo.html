@@ -202,6 +202,11 @@
 	  	textarea:
 	  	<textarea name="test.textarea" id="test.textarea" class="required body-textarea" placeholder="textarea placeholder"></textarea>
 	  </p>
+    <p>
+      span:
+      <span type="input" id="test.span">有效的span</span>
+      <span>无效的span</span>
+    </p>
 
 	  <table id="divMenu">
       <thead>
@@ -218,8 +223,8 @@
           <td><textarea></textarea></td>
         </tr>
       </tbody>
-      <tbody id="addtr"></tbody>
-      <tbody id="ACE_HIDDEN_TABLE" style="display: none">
+      <tbody class="addtr"></tbody>
+      <tbody class="ACE_HIDDEN_TABLE" style="display: none">
         <tr id="templatetr" class="templatetr">
           <td><textarea></textarea></td>
           <td><textarea></textarea></td>
@@ -437,7 +442,8 @@
     	{"name":"test.checkbox1","value":""},
     	{"name":"test.checkbox3","value":""},
     	{"name":"test.select","value":"option2"},
-    	{"name":"test.textarea","value":"this is a textarea"}
+    	{"name":"test.textarea","value":"this is a textarea"},
+      {"name":"test.span","value":"span"},
     ],
     testData2 = [
     	{"man":"x1","number":"xx1","require":"xxx1"},
@@ -612,7 +618,11 @@
   			{"man1":"1","man2":"1"},
   			{"man1":"2","man2":"2"}
   		];
-  		$.GSForm.advanceInfoGroup('info-group');
+  		$.GSForm.advanceInfoGroup('info-group',[],{
+        afterAddInfoGroup: function(){
+          alert('成功添加一组内容');
+        }
+      });
   		$('#get2').click(function(){
 				var data = $.GSForm.getInfoGroup('info-group');
 				alert(JSON.stringify(data));

@@ -8,6 +8,7 @@
 				    $checkbox = $('input[type="checkbox"]'),
 				    $select = $('select'),
 				    $textarea = $('textarea'),
+				    $span = $('span'),
 				    $imgItems = $('.picture-item'),
 				    imgs = [],
 				    pre = '';
@@ -60,6 +61,15 @@
 					}
 				});
 
+				$span.each(function(){
+					var $this = $(this),
+					    id = $this.attr('id');
+					if( id && id.indexOf('.')!==-1 ){
+						pre = id.split('.')[0];
+						data.push({name: id,value: $this.text()});
+					}
+				});
+
 				$imgItems.each(function(){
 					var $this = $(this),
 					    $img = $this.children('img'),
@@ -67,14 +77,19 @@
 					imgs.push(src);    
 				});
 
-				if(imgs.length && pre){
-					pre += '.image';
-					data.push({name:pre,value:imgs.join(',')});
-				}
+        if(pre){
+					if(imgs.length){
+						pre += '.image';
+						data.push({name:pre,value:imgs.join(',')});
+					}else if($('.pictures').length){
+						data.push({name:pre,value:''});
+					}
+        }
+				
 
 				return data;
 			},
-			set: function(data){
+			set: function(data,callback){
 				var len = data.length,
 				    temp = null,
 				    name,
@@ -84,6 +99,13 @@
 				    tagType,
 				    $radios,
 				    isImage;
+
+				callback = $.extend({}, {
+        	beforeSetData: function(){}
+        }, callback);  
+
+        callback.beforeSetData(data);
+				    
 				if(len){
 					for(var i=0;i<len;i++){
 						temp = data[i];
@@ -132,6 +154,10 @@
 								if(tagName==='TEXTAREA'){
 									$input.removeClass('text-placeholder');
 									$input.val(value);
+								}
+
+								if(tagName==='SPAN'){
+									$input.text(value);
 								}
 								
 							}
@@ -201,15 +227,24 @@
 			},
 			advanceTable: function(tableId){
 				var $table = $('#' + tableId),
-				    $tbody = $('#addtr'),
+				    $tbody = $table.find('.addtr'),
+				    $templateWrap = $table.find('.ACE_HIDDEN_TABLE'),
 				    $textarea = $table.find('textarea:visible'),
 				    $advanceTable = null,
 				    $btnAdd = $('<div id="js-advance-table-btn1-'+ tableId +'" class="js-advance-table-btn advance-table-btn advance-table-btn-add">+</div>'),
 				    $btnDel = $('<div id="js-advance-table-btn2-'+ tableId +'" class="js-advance-table-btn advance-table-btn advance-table-btn-del">-</div>'),
 				    template = '';
 
+        if($tbody.length===0){
+ 					$tbody = $table.find('#addtr');
+        }
+
+        if($templateWrap.length===0){
+ 					$templateWrap = $table.find('#ACE_HIDDEN_TABLE');
+        }
+
 				//获取模板
-				template = $('#ACE_HIDDEN_TABLE').html().replace(/id="[^"]*"/,'');
+				template = $templateWrap.html().replace(/id="[^"]*"/,'');
 				//$template = $(template).removeAttr('id');
 
 				//将表格用一个相对定位的div包裹
@@ -315,20 +350,25 @@
 				}
 				//判断是否是第一行
 				function isFirstRow($tr){
-					return !$tr.parent().attr('id');
+					return !($tr.parent().attr('id') || $tr.parent().attr('class'));
 				}
 			},
-			advanceInfoGroup: function(wrapId,moreInfo){
+			advanceInfoGroup: function(wrapId,moreInfo,callback){
 				var $wrap = $('#' + wrapId),
 				    $ibody = $wrap.find('.info-group-body'),
 				    $btnAdd = $wrap.find('.add'),
 				    $btnDel = $wrap.find('.del'),
 				    template = $wrap.find('.template').html().replace(/text-placeholder/g,'');
 
+				callback = $.extend({}, {
+        	afterAddInfoGroup: function(){}
+        }, callback);    
+
         //点击一组内容
         $btnAdd.click(function(){
-        	var _template = template;
-        	if(moreInfo){
+        	var _template = template,
+        	    $_template = $(_template);
+        	if(moreInfo && moreInfo.length>0){
         		var len = $ibody.find('.info-item').length;
         		if(moreInfo[len]){
         			_template = template.replace(/###yx###/g,moreInfo[len]);
@@ -337,7 +377,8 @@
         			return false;
         		}
 				  } 
-        	$ibody.append($(_template).removeClass('text-placeholder'));
+        	$ibody.append($_template.removeClass('text-placeholder'));
+        	callback.afterAddInfoGroup($_template);
         });
         //点击删除最后一组内容
         $btnDel.click(function(){
@@ -346,11 +387,17 @@
         	}
         });				
 			},
-			getInfoGroup: function(id){
+			getInfoGroup: function(id,callback){
 				var data = [],
 				    $wrap = $('#' + id),
 				    $items = $wrap.find('.info-group-body').children('.info-item');
         
+        callback = $.extend({}, {
+        	beforeGetInfoGroup: function(){}
+        }, callback);
+
+        callback.beforeGetInfoGroup();
+
 				$items.each(function(){
 					var $input = $(this).find('.info-unit'),
 					    item = {};
@@ -364,7 +411,7 @@
 				});
 				return data;
 			},
-			setInfoGroup: function(data,id,moreInfo){
+			setInfoGroup: function(data,id,moreInfo,callback){
 				var $wrap = $('#' + id),
 				    $ibody = $wrap.find('.info-group-body'),
 				    len = data.length,
@@ -372,6 +419,10 @@
 				    _template = template,
 				    $template,
 				    temp = {};
+
+				callback = $.extend({}, {
+        	afterSetInfoItem: function(){}
+        }, callback);    
 
 				$ibody.empty();    
 				if(len){
@@ -386,6 +437,7 @@
             	$template.find('[data-name="' + _t + '"]').val(temp[_t]);
             }
             $ibody.append($template);
+            callback.afterSetInfoItem($template);
 					}
 				}
 
