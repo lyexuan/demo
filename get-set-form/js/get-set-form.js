@@ -213,8 +213,8 @@
 				//$template = $(template).removeAttr('id');
 
 				//将表格用一个相对定位的div包裹
-        $table.wrap('<div id="advance-table" style="position: relative;"></div>');
-        $advanceTable = $('#advance-table');
+        $table.wrap('<div id="advance-table-'+tableId+'" style="position: relative;"></div>');
+        $advanceTable = $('#advance-table-'+tableId);
 
 			  //增加两个按钮，新增和删除
         $('#js-advance-table-btn1-' + tableId).remove();//显示按钮之前先移除先前的按钮
