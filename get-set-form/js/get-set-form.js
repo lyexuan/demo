@@ -82,50 +82,62 @@
 				    $input,
 				    tagName,
 				    tagType,
-				    $radios;
+				    $radios,
+				    isImage;
 				if(len){
 					for(var i=0;i<len;i++){
 						temp = data[i];
 						name = temp.name;
 						value = temp.value;
 						$input = $('#' + name.replace('.','\\.'));
+						isImage = name.split('.')[1];
 
-						if(!$input.length){
+						if(isImage === 'image'){
+							if(window.initImages){
+								initImages(value);
+							}else{
+								alert('common.js中找不到initImages方法');
+							}
+						}else{
+							if(!$input.length){
 							//if(value && !/[/]/.test(value)){
 							if(value && value!='/'){
-								$input = $('#' + value.replace('.','\\.'));
-							}
-						}
-
-						if($input.length){
-
-							tagName = $input[0].tagName.toUpperCase();
-							tagType = $input.attr('type');
-							if(tagType){
-								tagType = tagType.toUpperCase();
-							}
-						
-							if(tagName==='INPUT'){
-								if(tagType === 'TEXT'){
-									$input.removeClass('text-placeholder');
-									$input.val(value);
-								}else if(tagType === 'RADIO'){
-									$radios = $(':radio[id="'+value+'"]').attr('checked',true);
-								}else if(tagType === 'CHECKBOX'){
-									$input.attr('checked',true);
+									$input = $('#' + value.replace('.','\\.'));
 								}
 							}
 
-							if(tagName==='SELECT'){
-								$input.val(value);
-							}
+							if($input.length){
 
-							if(tagName==='TEXTAREA'){
-								$input.removeClass('text-placeholder');
-								$input.val(value);
-							}
+								tagName = $input[0].tagName.toUpperCase();
+								tagType = $input.attr('type');
+								if(tagType){
+									tagType = tagType.toUpperCase();
+								}
 							
+								if(tagName==='INPUT'){
+									if(tagType === 'TEXT'){
+										$input.removeClass('text-placeholder');
+										$input.val(value);
+									}else if(tagType === 'RADIO'){
+										$radios = $(':radio[id="'+value+'"]').attr('checked',true);
+									}else if(tagType === 'CHECKBOX'){
+										$input.attr('checked',true);
+									}
+								}
+
+								if(tagName==='SELECT'){
+									$input.val(value);
+								}
+
+								if(tagName==='TEXTAREA'){
+									$input.removeClass('text-placeholder');
+									$input.val(value);
+								}
+								
+							}
 						}
+
+						
 					}
 				}
 			},
@@ -192,8 +204,8 @@
 				    $tbody = $('#addtr'),
 				    $textarea = $table.find('textarea:visible'),
 				    $advanceTable = null,
-				    $btnAdd = $('<div class="js-advance-table-btn advance-table-btn advance-table-btn-add">+</div>'),
-				    $btnDel = $('<div class="js-advance-table-btn advance-table-btn advance-table-btn-del">-</div>'),
+				    $btnAdd = $('<div id="js-advance-table-btn1-'+ tableId +'" class="js-advance-table-btn advance-table-btn advance-table-btn-add">+</div>'),
+				    $btnDel = $('<div id="js-advance-table-btn2-'+ tableId +'" class="js-advance-table-btn advance-table-btn advance-table-btn-del">-</div>'),
 				    template = '';
 
 				//获取模板
@@ -205,7 +217,8 @@
         $advanceTable = $('#advance-table');
 
 			  //增加两个按钮，新增和删除
-        $('.js-advance-table-btn-add').remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn1-' + tableId).remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn2-' + tableId).remove();//显示按钮之前先移除先前的按钮
 
         $advanceTable.append($btnAdd)
                      .append($btnDel);
@@ -380,14 +393,18 @@
 			complexAdvanceTable: function(id){
 				var $wrap = $('#' + id),
 				    $table = $wrap.children('.complex-table-content').children('table'),
-				    $btnAdd = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一组</div>'),
-				    $btnDel = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除该组</div>'),
-				    $btnAdd2 = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一行</div>'),
-				    $btnDel2 = $('<div class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除末行</div>'),
+				    $btnAdd = $('<div id="js-advance-table-btn1-'+ id +'" class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一组</div>'),
+				    $btnDel = $('<div id="js-advance-table-btn2-'+ id +'" class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除该组</div>'),
+				    $btnAdd2 = $('<div id="js-advance-table-btn3-'+ id +'" class="js-complex-advance-table-btn advance-table-btn advance-table-btn-add">增加一行</div>'),
+				    $btnDel2 = $('<div id="js-advance-table-btn4-'+ id +'" class="js-complex-advance-table-btn advance-table-btn advance-table-btn-del">删除末行</div>'),
 				    template = $wrap.find('.complex-table-template').html();
 
         //增加两个按钮，新增和删除
-        $('.js-complex-advance-table-btn').remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn1-' + id).remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn2-' + id).remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn3-' + id).remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn4-' + id).remove();//显示按钮之前先移除先前的按钮
+
         $wrap.append($btnAdd)
              .append($btnDel)
              .append($btnAdd2)
@@ -729,8 +746,8 @@
 				    $wrap = $table.parents('.advance-table-wrap'),
 				    $textarea = $table.find('textarea:visible'),
 				    $template = $('#' + templateId),
-				    $btnAdd = $('<div class="js-advance-easy-table-btn advance-table-btn advance-table-btn-add">+</div>'),
-				    $btnDel = $('<div class="js-advance-easy-table-btn advance-table-btn advance-table-btn-del">-</div>'),
+				    $btnAdd = $('<div id="js-advance-table-btn1-'+ tbodyId +'" class="js-advance-easy-table-btn advance-table-btn advance-table-btn-add">+</div>'),
+				    $btnDel = $('<div id="js-advance-table-btn2-'+ tbodyId +'" class="js-advance-easy-table-btn advance-table-btn advance-table-btn-del">-</div>'),
 				    template = '';
 
         callback = $.extend({}, {
@@ -743,7 +760,8 @@
 				template = $template.find('tbody').html().replace(/id="[^"]*"/,'');
 
 			  //增加两个按钮，新增和删除
-        $('.js-advance-easy-table-btn').remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn1-'+ tbodyId).remove();//显示按钮之前先移除先前的按钮
+        $('#js-advance-table-btn2-'+ tbodyId).remove();//显示按钮之前先移除先前的按钮
 
         $wrap.append($btnAdd)
              .append($btnDel);
