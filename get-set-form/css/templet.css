@@ -5,7 +5,7 @@ textarea{
     font-family: "SimSun";
     font-size: 16px;
     /* 3.行间距1.5倍 */
-    line-height: 1.5;
+    line-height: 1.8;
 }
 body{
   /* 11.所有HTML页面，左右留白等宽像素（参考WORD的页边距） */
@@ -35,7 +35,7 @@ p{
   margin: 0;
 }
 /* 5.textarea边框颜色淡一点 */
-textarea{  
+textarea{
   width: 100%;
   display: block;
   overflow: hidden;
@@ -58,7 +58,7 @@ input[type="text"]{
 
 table{
   width: 100%;
-  border-collapse: collapse;  
+  border-collapse: collapse;
   border-color: #999;
   margin: 10px 0;
 }
@@ -195,10 +195,11 @@ input[type="checkbox"].invalid:focus{
   border: 1px solid #ccc;
 }
 .pictures a{
-  
+
 }
 .pictures img{
   border: none;
+  max-width: 700px;
 }
 .pictures .btn-container{
   padding: 4px 8px;
@@ -295,3 +296,23 @@ table{
   border-bottom: 1px solid #999;
 }
 /*强行修复一些样式*/
+
+.underline-long {
+  border-bottom: 1px solid #999;
+  width: 210px;
+  display: inline-block;
+}
+.underline-mid {
+  border-bottom: 1px solid #999;
+  width: 100px;
+  display: inline-block;
+}
+.underline-short {
+  border-bottom: 1px solid #999;
+  width: 50px;
+  display: inline-block;
+}
+.underline{
+  border-bottom: 1px solid #999;
+  display: inline-block;
+}

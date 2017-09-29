@@ -148,16 +148,37 @@ function getFormJson() {
     return jsonstr;
 
 }
-function setFormJson(dataStr) {
+function getInfoGroup(wrapId) {
+    var jsonstr = "[]";
 
+    //  if ($.GSForm) {
+   
+    var data = $.GSForm.getInfoGroup(wrapId);
+
+    jsonstr = JSON.stringify(data);
+    //  }
+ 
+
+    return jsonstr;
+
+}
+function setFormJson(dataStr) {
     if (dataStr == null) return;
 
     var objArray = JSON.parse(dataStr);
     if ($.GSForm) {
         $.GSForm.set(objArray);
     }
+}
 
+function setInfoGroup(dataStr, wrapId) {
 
+    if (dataStr == null) return;
+
+    var objArray = JSON.parse(dataStr);
+    if ($.GSForm) {
+        $.GSForm.setInfoGroup(objArray, wrapId);
+    }
 }
 
 function getTableJson(id) {
@@ -366,16 +387,19 @@ function SetImageSize() {
 //初始化页面中的图片
 //初始化后端调用initImages方法，并传以','分隔的图片路径，图片名称以'$divId'作为后缀
 //如'c://test/imgName1$divId.jpg,c://test/imgName2$divId.jpg'
-function initImages(images){
-	var imagesArray = images.split(','),
+function initImages(images) {
+    if (images) {
+        var imagesArray = images.split(','),
 	    len = imagesArray.length,
 	    temp = '',
 	    divId = '';
-	for(var i=0;i<len;i++){
-	  temp = imagesArray[i];
-	  divId = temp.split('$')[1].split('.')[0];
-	  appendImage(divId,temp);
-	}
+        for (var i = 0; i < len; i++) {
+            temp = imagesArray[i];
+            divId = temp.split('$')[1].split('.')[0];
+            appendImage(divId, temp);
+        }
+    }
+	
 }
 //插入图片
 function AddImage(divId) {

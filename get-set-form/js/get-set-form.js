@@ -11,26 +11,24 @@
 				    $span = $('span'),
 				    $imgItems = $('.picture-item'),
 				    imgs = [],
-				    pre = '';
+				    imgName = '';
 
 				$text.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 && !$this.hasClass('text-placeholder')){
-						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
-        
+
 				$radio.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id'),
 					    name,
 					    $radio;
-					if( id && id.indexOf('.')!==-1 ){			
-					  pre = id.split('.')[0];			
+					if( id && id.indexOf('.')!==-1 ){
 						name = $this.attr('name');
-					  data.push({name: name,value: id});					  
+					  data.push({name: name,value: id});
 					}
 				});
 
@@ -38,7 +36,6 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 && $this.attr('checked')){
-						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -47,7 +44,6 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
-						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -56,7 +52,6 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
-						pre = id.split('.')[0];
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -65,27 +60,28 @@
 					var $this = $(this),
 					    id = $this.attr('id');
 					if( id && id.indexOf('.')!==-1 ){
-						pre = id.split('.')[0];
 						data.push({name: id,value: $this.text()});
 					}
 				});
 
-				$imgItems.each(function(){
+				$imgItems.each(function(index){
 					var $this = $(this),
 					    $img = $this.children('img'),
 					    src = $img.attr('src');
-					imgs.push(src);    
+					if(index===0){
+						imgName = $imgItems.parent().attr('name');
+					}    
+					imgs.push(src);
 				});
 
-        if(pre){
+				if (imgName) {
 					if(imgs.length){
-						pre += '.image';
-						data.push({name:pre,value:imgs.join(',')});
-					}else if($('.pictures').length){
-						data.push({name:pre,value:''});
+						data.push({name:imgName,value:imgs.join(',')});
+					}else{
+						data.push({name:imgName,value:''});
 					}
         }
-				
+
 
 				return data;
 			},
@@ -102,10 +98,10 @@
 
 				callback = $.extend({}, {
         	beforeSetData: function(){}
-        }, callback);  
+        }, callback);
 
         callback.beforeSetData(data);
-				    
+
 				if(len){
 					for(var i=0;i<len;i++){
 						temp = data[i];
@@ -115,18 +111,22 @@
 						isImage = name.split('.')[1];
 
 						if(isImage === 'image'){
-							if(window.initImages){
-								initImages(value);
-							}else{
-								alert('common.js中找不到initImages方法');
+							if($('.pictures[name="'+name+'"]').length){
+								if(window.initImages){
+									initImages(value);
+								}else{
+									alert('common.js中找不到initImages方法');
+								}
 							}
 						}else{
-							if(!$input.length){
+						    if (!$input.length) {
+						        try{
 							//if(value && !/[/]/.test(value)){
 							if(value && value!='/'){
 									$input = $('#' + value.replace('.','\\.'));
 								}
-							}
+						        }catch(e){}
+						    }
 
 							if($input.length){
 
@@ -135,7 +135,7 @@
 								if(tagType){
 									tagType = tagType.toUpperCase();
 								}
-							
+
 								if(tagName==='INPUT'){
 									if(tagType === 'TEXT'){
 										$input.removeClass('text-placeholder');
@@ -159,11 +159,11 @@
 								if(tagName==='SPAN'){
 									$input.text(value);
 								}
-								
+
 							}
 						}
 
-						
+
 					}
 				}
 			},
@@ -176,8 +176,8 @@
 				    names = [];
 				$th.each(function(){
 					names.push($(this).attr('data-name'));
-				});    
-        
+				});
+
 				$tr.each(function(){
 					var $td = $(this).children('td'),
 					    item = {},
@@ -258,7 +258,7 @@
         $advanceTable.append($btnAdd)
                      .append($btnDel);
 
-        // alert(0);             
+        // alert(0);
         //点击新增按钮，增加一行
         $btnAdd.click(function(){
         	var $tr = $table.find('.advance-table-current-row'),
@@ -270,7 +270,7 @@
             $tr.after($t);
         	}
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	    $t.find('textarea').TextAreaExpander(72);
         	}
         	refreshBtnPos();
         });
@@ -303,11 +303,11 @@
 					    $tr = $this.parents('tr');
 
 					if(!$tr.hasClass('advance-table-current-row')){
-						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
-						$tr.addClass('advance-table-current-row');  
+						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');
+						$tr.addClass('advance-table-current-row');
 						refreshBtnPos();
-					}    	
-				}); 
+					}
+				});
 
 				//文本域失去焦点事件
 				/*$textarea.blur(function(){
@@ -315,7 +315,7 @@
 					    $tr = $this.parents('tr');
           $tr.removeClass('advance-table-current-row');
 					refreshBtnPos();
-				});*/ 
+				});*/
 
 				//刷新按钮位置
 				function refreshBtnPos(){
@@ -337,7 +337,7 @@
 					}else{
 						hideBtn();
 					}
-				}   
+				}
 				//显示按钮
 				function showBtn(){
 					$btnAdd.show();
@@ -362,21 +362,22 @@
 
 				callback = $.extend({}, {
         	afterAddInfoGroup: function(){}
-        }, callback);    
+        }, callback);
 
         //点击一组内容
         $btnAdd.click(function(){
         	var _template = template,
         	    $_template = $(_template);
         	if(moreInfo && moreInfo.length>0){
-        		var len = $ibody.find('.info-item').length;
-        		if(moreInfo[len]){
-        			_template = template.replace(/###yx###/g,moreInfo[len]);
+        	    var len = $ibody.find('.info-item').length;
+        		if (moreInfo[len]) {
+        		    _template = template.replace(/###yx###/g, moreInfo[len]);
+        		    $_template = $(_template);
         		}else{
         			alert('不能再增加更多了!');
         			return false;
         		}
-				  } 
+				  }
         	$ibody.append($_template.removeClass('text-placeholder'));
         	callback.afterAddInfoGroup($_template);
         });
@@ -385,28 +386,31 @@
         	if($ibody.find('.info-item').length>1){
         		$ibody.find('.info-item:last').remove();
         	}
-        });				
+        });
 			},
 			getInfoGroup: function(id,callback){
 				var data = [],
 				    $wrap = $('#' + id),
 				    $items = $wrap.find('.info-group-body').children('.info-item');
-        
+
         callback = $.extend({}, {
         	beforeGetInfoGroup: function(){}
         }, callback);
 
         callback.beforeGetInfoGroup();
 
-				$items.each(function(){
+        $items.each(function () {
+
 					var $input = $(this).find('.info-unit'),
 					    item = {};
-					$input.each(function(){
+					$input.each(function () {
+
 						var $this = $(this),
 						    key = $this.attr('data-name'),
 						    value = $this.val();
-            item[key] = value;
-					});    
+						item[key] = value;
+
+					});
 					data.push(item);
 				});
 				return data;
@@ -422,9 +426,9 @@
 
 				callback = $.extend({}, {
         	afterSetInfoItem: function(){}
-        }, callback);    
+        }, callback);
 
-				$ibody.empty();    
+				$ibody.empty();
 				if(len){
 					for(var i=0;i<len;i++){
             temp = data[i];
@@ -433,7 +437,7 @@
         		}
           	$template = $(_template);
             for(var _t in temp){
-            	
+
             	$template.find('[data-name="' + _t + '"]').val(temp[_t]);
             }
             $ibody.append($template);
@@ -467,7 +471,7 @@
         	    $t = $(template).addClass('advance-table-current-tbody');
         	$tbody.removeClass('advance-table-current-tbody');
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	    $t.find('textarea').TextAreaExpander(72);
         	}
         	$tbody.after($t);
         	refreshBtnPos();
@@ -498,10 +502,10 @@
         	    $td = $tr.find('td:eq(0)'),
         	    rowspan = parseInt($td.attr('rowspan'));
 
-        	$t.find('td:eq(0)').remove(); 
+        	$t.find('td:eq(0)').remove();
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);        	   
-        	}   
+        	    $t.find('textarea').TextAreaExpander(72);
+        	}
         	$tbody.append($t);
         	rowspan++;
         	$td.attr('rowspan',rowspan);
@@ -539,11 +543,11 @@
 					    $tr = $this.parents('tbody');
 
 					if(!$tr.hasClass('advance-table-current-tbody')){
-						$table.find('.advance-table-current-tbody').removeClass('advance-table-current-tbody');  
-						$tr.addClass('advance-table-current-tbody');  
+						$table.find('.advance-table-current-tbody').removeClass('advance-table-current-tbody');
+						$tr.addClass('advance-table-current-tbody');
 						refreshBtnPos();
-					}    	
-				}); 
+					}
+				});
 
 				//刷新按钮位置
 				function refreshBtnPos(){
@@ -562,7 +566,7 @@
 						$btnAdd2.css('top',top + trHeight2);
 						$btnDel2.css('top',top + trHeight2);
 					}
-				}   
+				}
 			},
 			getComplexAdvanceTable: function(id){
 				var data = [],
@@ -575,8 +579,8 @@
 
 				$th.each(function(){
 					names.push($(this).attr('data-name'));
-				});    
-        
+				});
+
 				$tbody.each(function(){
 					var $this = $(this),
 					    $tr = $this.children('tr'),
@@ -601,14 +605,14 @@
             			_name = names[j+1]
             		}
             		_item[_name] = $this.find('textarea').val();
-            	}    
-            	
+            	}
+
             });
             item.content.push(_item);
 					});
 
 					data.push(item);
-					
+
 				});
 				return data;
 			},
@@ -674,7 +678,7 @@
 					if(tagType){
 						tagType = tagType.toUpperCase();
 					}
-				
+
 					if(tagName==='INPUT'){
 						if(tagType === 'TEXT'){
 							if(!($this.val() && !$this.hasClass('text-placeholder'))){
@@ -717,7 +721,7 @@
 					}else{
 						$this.removeClass('invalid');
 					}
-				}  
+				}
 
 				if(!isValid){
 					//给出提示语，提示语展示几秒钟后消失，只留下红色的边框
@@ -776,12 +780,12 @@
 					    newWidth = oriWidth,
 					    $ci = $('#countInputWidth');
 
-          
+
           $ci.append($span);
-          
-         
+
+
           newWidth = $span.width();
-          
+
           $span.remove();
 					//用一个模拟的span去获取内容的宽度，和初始宽度比对，超多初始宽度则拓宽input否则还原原始长度
 					if(oriWidth<newWidth && !$this.hasClass('text-placeholder')){
@@ -789,7 +793,7 @@
 					}else{
 						$this.width(oriWidth);
 					}
-					
+
         });
 			},
 			advanceEasyTable: function(tbodyId,templateId,callback){
@@ -807,7 +811,7 @@
         	afterAddRow   : function(){},
         	afterDelRow   : function(){}
         }, callback);
-        
+
 				//获取模板
 				template = $template.find('tbody').html().replace(/id="[^"]*"/,'');
 
@@ -828,7 +832,7 @@
           $tr.after($t);
 
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);        	   
+        	    $t.find('textarea').TextAreaExpander(72);
         	}
         	refreshBtnPos();
 
@@ -847,13 +851,16 @@
 	        	}else if($tr.next('tr').length){
 	        		alert('第一行不能删除');
 	        	}
-	        	
+
           }
         });
 
         //初始化控制按钮
         $tbody.children('tr:eq(0)').addClass('advance-table-current-row');
-        refreshBtnPos();
+        setTimeout(function () {
+            refreshBtnPos();
+        }, 1000);
+
 
         //文本域绑定点击事件
         $('#' + tbodyId + ' textarea').live('click',function(){
@@ -861,17 +868,18 @@
 					    $tr = $this.parents('tr');
 
 					if(!$tr.hasClass('advance-table-current-row')){
-						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');  
-						$tr.addClass('advance-table-current-row');  
+						$table.find('.advance-table-current-row').removeClass('advance-table-current-row');
+						$tr.addClass('advance-table-current-row');
 						refreshBtnPos();
-					}    	
-				}); 
+					}
+				});
 
 				//刷新按钮位置
 				function refreshBtnPos(){
 					var $cRow = $table.find('.advance-table-current-row'),
 					    top = 0,
 					    trHeight = 0;
+
 					if($cRow.length){
 						//将按钮移动到合适的位置
 						top = $cRow.offset().top - $table.offset().top;
@@ -884,7 +892,7 @@
 					}else{
 						hideBtn();
 					}
-				}   
+				}
 				//显示按钮
 				function showBtn(){
 					$btnAdd.show();
@@ -895,6 +903,50 @@
 					$btnAdd.hide();
 					$btnDel.hide();
 				}
+			},
+			getAdvanceEasyTable: function(tbodyId,callback){
+				var $tbody = $('#' + tbodyId),
+				    $table = $tbody.parents('table'),
+				    $tr = $tbody.children('tr'),
+				    $wrap = $table.parents('.advance-table-wrap'),
+				    $textarea = $table.find('textarea:visible'),
+				    names = $tbody.attr('data-name'),
+				    namesLen = 0,
+				    data = [];
+
+        callback = $.extend({}, {}, callback);
+
+				if(names){
+					names = JSON.parse(names);
+					namesLen = names.length;
+					if(namesLen){
+						$tr.each(function(){
+							var $this = $(this),
+							    $tds = $this.children('td'),
+							    temp = {},
+							    name = '',
+							    i = 0;
+							$tds.each(function(){
+								var $this = $(this),
+								    $textarea = $this.find('textarea'),
+								    value = '',
+								    rowspan = $this.attr('rowspan');
+
+								if(!rowspan){
+									if($textarea.length){
+										value = $textarea.val();
+									}
+									name = names[i];
+									temp[name] = value;
+									++i;
+								}    
+							});  
+							data.push(temp);  
+						});
+					}
+				}
+
+				return data;
 			}
 		}
 	});
