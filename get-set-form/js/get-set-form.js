@@ -830,6 +830,7 @@
         	$tr.removeClass('advance-table-current-row');
 
           $tr.after($t);
+          $t.find('textarea').removeClass('text-placeholder');
 
         	if ($.fn.TextAreaExpander) {
         	    $t.find('textarea').TextAreaExpander(72);
@@ -908,8 +909,6 @@
 				var $tbody = $('#' + tbodyId),
 				    $table = $tbody.parents('table'),
 				    $tr = $tbody.children('tr'),
-				    $wrap = $table.parents('.advance-table-wrap'),
-				    $textarea = $table.find('textarea:visible'),
 				    names = $tbody.attr('data-name'),
 				    namesLen = 0,
 				    data = [];
@@ -932,7 +931,7 @@
 								    value = '',
 								    rowspan = $this.attr('rowspan');
 
-								if(!rowspan){
+								if(!rowspan || rowspan==1){
 									if($textarea.length){
 										value = $textarea.val();
 									}
@@ -947,6 +946,62 @@
 				}
 
 				return data;
+			},
+			setAdvanceEasyTable: function(data,tbodyId,callback){
+				var $tbody = $('#' + tbodyId),
+				    $table = $tbody.parents('table'),
+				    len = data.length,
+				    $firstTr = $tbody.children('tr:eq(0)'),
+				    html = '',
+				    temp = {},
+				    tempArray = [],
+				    j=0;
+
+        callback = $.extend({}, {}, callback);
+
+				if(len){
+					for(var i=0;i<len;i++){
+						temp = data[i];
+						tempArray = [];
+						j=0;
+						for(var item in temp){
+							tempArray.push(temp[item]);
+						}
+						if(i===0){
+							//给第一行赋值
+							$firstTr.children('td').each(function(index, el) {
+								var $this = $(this),
+								    $textarea = $this.find('textarea'),
+								    rowspan = $this.attr('rowspan');
+
+								if(!rowspan || rowspan==1){
+									$textarea.val(tempArray[j])
+									         .removeClass('text-placeholder')
+									         .addClass('advance-table-current-row');
+									++j;
+								}
+
+								if(rowspan>1){
+									$this.attr('rowspan',len);
+								}
+							});
+						}else{
+							//拼接剩余的行
+							html += '<tr>';
+							for(var k=0,_len=tempArray.length;k<_len;k++){
+								html += '<td><textarea>' + tempArray[k] + '</textarea></td>';
+							}
+							html += '</tr>';
+						}
+					}
+					//移除除了第一行以外的行
+					$firstTr.nextAll('tr').remove();
+					//添加剩余行
+					$firstTr.after(html);
+					if ($.fn.TextAreaExpander) {
+        	  $tbody.find('textarea').TextAreaExpander(72);
+        	}
+				}
 			}
 		}
 	});
