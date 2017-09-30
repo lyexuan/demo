@@ -1,4 +1,5 @@
 ;(function($){
+	var TEXTAREA_DEFAULT_HEIGHT = 30;
 	$.extend({
 		GSForm: {
 			get: function(){
@@ -235,7 +236,7 @@
 					$tbody1.html(html1);
 					$tbody2.html(html2);
 					if ($.fn.TextAreaExpander) {
-					  $('textarea').TextAreaExpander(72);
+					  $('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
 				}
 			},
@@ -284,7 +285,7 @@
             $tr.after($t);
         	}
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);
+        	    $t.find('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
         	refreshBtnPos();
         });
@@ -487,7 +488,7 @@
         	    $t = $(template).addClass('advance-table-current-tbody');
         	$tbody.removeClass('advance-table-current-tbody');
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);
+        	    $t.find('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
         	$tbody.after($t);
         	refreshBtnPos();
@@ -520,7 +521,7 @@
 
         	$t.find('td:eq(0)').remove();
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);
+        	    $t.find('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
         	$tbody.append($t);
         	rowspan++;
@@ -671,7 +672,7 @@
 
 				$table.find('tbody').remove().end().append(html);
 				if ($.fn.TextAreaExpander) {
-				  $('textarea').TextAreaExpander(72);
+				  $('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
       	}
 			},
 			required: function(){
@@ -849,7 +850,7 @@
           $t.find('textarea').removeClass('text-placeholder');
 
         	if ($.fn.TextAreaExpander) {
-        		$t.find('textarea').TextAreaExpander(72);
+        		$t.find('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
         	refreshBtnPos();
 
@@ -1015,7 +1016,7 @@
 					//添加剩余行
 					$firstTr.after(html);
 					if ($.fn.TextAreaExpander) {
-        	  $tbody.find('textarea').TextAreaExpander(72);
+        	  $tbody.find('textarea').TextAreaExpander(TEXTAREA_DEFAULT_HEIGHT);
         	}
 				}
 			}
