@@ -294,6 +294,12 @@
         </tr>
       </tbody>
     </table>
+    <p>此种普通的自增行表格，有几个注意点：</p>
+    <ul>
+      <li>thead中的td要定义data-name属性</li>
+      <li>第一行的内容放在第一个tbody中，其余的内容放在class="addtr"或者id="addtr"的tbody中</li>
+      <li>作为模板的tbody要有id或者class属性，属性值为'ACE_HIDDEN_TABLE'</li>
+    </ul>
 
     <h2>三、placeholder兼容性处理</h2>
     <p>1.css</p>
@@ -302,16 +308,18 @@
     <pre>$('input[type="text"]').textPlaceholder();</pre>
 
     <h2>四、插入图片</h2>
+    <p>插入图片要有一个放置图片的容器，以及一个插入图片的按钮，容器需要具备class="pictures"以及name="前缀.image"(前缀的定义和页面中的其他输入框保持一致)；插入图片按钮需要有class="btn-add-img"，以及target属性，target属性的值为图片容器的id。</p>
     <div class="pictures" id="pictures" name="test.image"></div> 
     <div class="btn-add-img" id="btn-add-img" target="pictures">插入图片</div>   
 
     <h2>五、输入框自动增长</h2>
     <p>文档加载好后执行如下代码即可：</p>
     <pre>$.GSForm.autoInputWidth();</pre>
+    <p>在实际使用过程中需要根据实际情况去判断什么时机去触发这个方法，目前该方法定义在common.js中</p>
 
     <h2>六、textarea自动增长</h2>
-    <p>默认显示3-5行，因此组件初始化的时候传一个最小高度进去，高度的数值是16的倍数，一行则是16，两行则是32，如：</p>
-    <pre>jQuery("textarea[class*=textarea]").TextAreaExpander(48);</pre>
+    <p>默认显示3-5行，因此组件初始化的时候传一个最小高度进去，高度的数值是24的倍数，一行则是24，两行则是48，如：</p>
+    <pre>jQuery("textarea[class*=textarea]").TextAreaExpander(72);</pre>
 
     <h2>七、select组合选框</h2>
     <div class="group-select" id="group-select">
@@ -452,6 +460,7 @@
     		</tbody>
     	</table>
     </div>
+    <p class="text-danger">表格的html结构要严格遵循demo提供的，不可遗漏任何节点</p>
 
     <h2>十、表格新增一行简易脚本，带回调</h2>
     <button id="get5">获取数据</button>
@@ -490,7 +499,7 @@
         </tbody>
       </table>
     </div>
-
+    <p class="text-danger">表格的html结构要严格遵循demo提供的，不可遗漏任何节点；此外这种类型的表格在不同的浏览器中增加行和减少行的按钮可能存在定位偏差，为此提供对了回调函数，使得能够手动调整按钮的定位，第一信封中有个参考页面可以看。</p>
   </div>
 
   <script src="js/jquery-1.4.2.min.js"></script>
