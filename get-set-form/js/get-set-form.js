@@ -9,7 +9,7 @@
 				    $select = $('select'),
 				    $textarea = $('textarea'),
 				    $span = $('span'),
-				    $imgItems = $('.picture-item'),
+				    $imgWrap = $('.pictures'),
 				    imgs = [],
 				    imgName = '';
 
@@ -64,15 +64,21 @@
 					}
 				});
 
-				$imgItems.each(function(index){
-					var $this = $(this),
-					    $img = $this.children('img'),
-					    src = $img.attr('src');
-					if(index===0){
-						imgName = $imgItems.parent().attr('name');
-					}    
-					imgs.push(src);
+				$imgWrap.each(function () {
+				    var $this = $(this),
+					    $imgItems = $this.find('.picture-item');
+
+				    imgName = $this.attr('name');
+
+				    $imgItems.each(function () {
+				        var $this = $(this),
+                            $img = $this.children('img'),
+                            src = $img.attr('src');
+				        imgs.push(src);
+				    });
 				});
+
+				
 
 				if (imgName) {
 					if(imgs.length){
@@ -97,7 +103,8 @@
 				    isImage;
 
 				callback = $.extend({}, {
-        	beforeSetData: function(){}
+        	beforeSetData: function(){},
+        	afterSetData: function(){}
         }, callback);
 
         callback.beforeSetData(data);
@@ -165,6 +172,7 @@
 
 
 					}
+					callback.afterSetData(data);
 				}
 			},
 			getTable: function(tableId){
@@ -198,6 +206,11 @@
 				    html1 = '',
 				    html2 = '',
 				    temp;
+				
+				if($tbody2.length==0){
+					$tbody2 = $table.find('.addtr');
+				}    
+
 				if(len){
 					for(var i=0;i<len;i++){
 						temp = data[i];
@@ -218,6 +231,7 @@
 	            html2 += '</tr>';
 						}
 					}
+					
 					$tbody1.html(html1);
 					$tbody2.html(html2);
 					if ($.fn.TextAreaExpander) {
@@ -833,11 +847,11 @@
           $t.find('textarea').removeClass('text-placeholder');
 
         	if ($.fn.TextAreaExpander) {
-        	    $t.find('textarea').TextAreaExpander(72);
+        		$t.find('textarea').TextAreaExpander(72);
         	}
         	refreshBtnPos();
 
-        	callback.afterAddRow();
+        	callback.afterAddRow($t);
         });
         //点击删除按钮
         $btnDel.click(function(){
@@ -969,6 +983,7 @@
 						}
 						if(i===0){
 							//给第一行赋值
+							$firstTr.addClass('advance-table-current-row')
 							$firstTr.children('td').each(function(index, el) {
 								var $this = $(this),
 								    $textarea = $this.find('textarea'),
@@ -976,8 +991,7 @@
 
 								if(!rowspan || rowspan==1){
 									$textarea.val(tempArray[j])
-									         .removeClass('text-placeholder')
-									         .addClass('advance-table-current-row');
+									         .removeClass('text-placeholder');
 									++j;
 								}
 

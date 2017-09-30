@@ -156,7 +156,7 @@
 
             if (!this.Initialized) {
 
-                this.Initialized = true;
+                //this.Initialized = true;
 
                 $(this).css("padding-top", 0).css("padding-bottom", 0);
 

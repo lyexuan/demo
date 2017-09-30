@@ -41,6 +41,7 @@ textarea{
   overflow: hidden;
   border: 1px solid #999;
   padding: 10px;
+  background: #f1f1f1;
 }
 
 input[type="text"]{

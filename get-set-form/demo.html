@@ -50,7 +50,7 @@
   				<td>$.GSForm.get()</td>
   				<td>无</td>
   				<td>对象数组</td>
-  				<td>元素用id识别，其中同名的radio元素指定第一个radio的id即可</td>
+  				<td>元素用id识别，其中有所关联的radio和checkbox需要有相同的name值。值得注意的是，页面中插入的图片也是用这个方法获取的，图片容器（class="pictures"）需要具备一个name属性，其值为'前缀.image'</td>
   			</tr>
   			<tr>
   				<td>$.GSForm.set(data,callback)</td>
@@ -60,6 +60,7 @@
             <p>回调函数对象包括：</p>
             <ul>
               <li>beforeSetData: function(){}</li>
+              <li>afterSetData: function(){}</li>
             </ul>
           </td>
   			</tr>
@@ -428,7 +429,7 @@
           </tr>
         </thead>
         <tbody id="easy-tbody" data-name='["num","name","age"]'>
-          <tr>
+          <tr class="advance-table-current-row">
             <td><textarea></textarea></td>
             <td><textarea></textarea></td>
             <td><textarea></textarea></td>
