@@ -8,6 +8,97 @@ if(!Array.prototype.indexOf){
       return -1;
    };
 }
+//处理页面源码的脚本
+var htmlHandle = {
+	input2span: function($inputs){
+		if($inputs && $inputs.length){
+			$inputs.each(function(){
+				var $this = $(this),
+				    value = $this.val();
+				$this.after('<span class="input2span" style="border: 0;border-bottom: 1px solid #999;padding-left: 10px;padding-right: 10px;">' + value + '</span>');
+				$this.remove();
+			});
+		}
+	},
+	radio2span: function($inputs){
+		if($inputs && $inputs.length){
+			$inputs.each(function(){
+				var $this = $(this),
+				    value = $this.val(),
+				    $p = $this.parent();
+				if($this.attr("checked")){
+					$p.after('<span class="input2span" style="border: 0;border-bottom: 1px solid #999;padding-left: 10px;padding-right: 10px;">' + value + '</span>');
+				}
+				$p.remove();
+			});
+		}
+	},
+	select2span: function($inputs){
+		if($inputs && $inputs.length){
+			$inputs.each(function(){
+				var $this = $(this),
+				    value = $this.attr('data-value');
+				$this.after('<span class="input2span" style="border: 0;border-bottom: 1px solid #999;padding-left: 10px;padding-right: 10px;">' + value + '</span>');
+				$this.remove();
+			});
+		}
+	},
+	writeSelectValue: function($inputs){
+		if($inputs && $inputs.length){
+			$inputs.each(function(){
+				var $this = $(this);
+				$this.attr('data-value',$this.val());
+			});
+		}
+	},
+	textare2div: function($inputs){
+		if($inputs && $inputs.length){
+			$inputs.each(function(){
+				var $this = $(this),
+				    value = $this.val();
+				$this.after('<div class="textarea2div" style="white-space: pre-wrap;word-wrap: break-word;border: 0;border-bottom: 1px solid #999;">' + value + '</div>');
+				$this.remove();
+			});
+		}
+	},
+	outputHtml: function(){
+		var html,
+        bodyHtml,
+        headHtml,
+        $copyHtml,
+	    $inputs,
+	    $radiosAndCheckboxs,
+	    $selects,
+	    $textarea;
+
+      html = '<!DOCTYPE html><html>';
+      headHtml = $('head')[0].outerHTML;
+      html += headHtml;
+
+      htmlHandle.writeSelectValue($('body select'));//为了保证select的值能正确转换，将其值存入data-value属性中
+
+  		$copyHtml = $('body').clone();//正式使用：复制整个页面
+  		//$copyHtml = $('html');//测试：复制整个页面
+
+	    $inputs = $copyHtml.find('input[type="text"]');//找出克隆后的所有input
+	    $radiosAndCheckboxs = $copyHtml.find('input[type="radio"],input[type="checkbox"]');//找出克隆后的所有radio和checkbox
+	    $selects = $copyHtml.find('select');//找出克隆后的所有select
+	    $textarea = $copyHtml.find('textarea');//找出克隆后的所有textarea
+
+  		htmlHandle.input2span($inputs);//将input替换成span
+  		htmlHandle.radio2span($radiosAndCheckboxs);//将radio和checkbox替换成span
+  		htmlHandle.select2span($selects);//将select替换成span
+  		htmlHandle.textare2div($textarea);//将textarea替换成div
+
+      bodyHtml = $copyHtml[0].outerHTML;
+
+      html += '<body>';
+      html += bodyHtml;
+      html += '</body></html>';
+
+  		return html;
+	}
+};
 
 (function ($) {
 
@@ -152,35 +243,65 @@ function getInfoGroup(wrapId) {
     var jsonstr = "[]";
 
     //  if ($.GSForm) {
-   
+
     var data = $.GSForm.getInfoGroup(wrapId);
 
     jsonstr = JSON.stringify(data);
     //  }
- 
+
+
+    return jsonstr;
+
+}
+function getAdvanceEasyTable(tbodyId) {
+    var jsonstr = "[]";
+
+    //  if ($.GSForm) {
+
+    var data = $.GSForm.getAdvanceEasyTable(tbodyId);
+
+
+    jsonstr = JSON.stringify(data);
+    //  }
+
 
     return jsonstr;
 
 }
 function setFormJson(dataStr) {
+
+
     if (dataStr == null) return;
 
     var objArray = JSON.parse(dataStr);
+
     if ($.GSForm) {
+
         $.GSForm.set(objArray);
+
     }
 }
 
-function setInfoGroup(dataStr, wrapId) {
+function setInfoGroup(dataStr, wrapId, moreInfoStr) {
 
     if (dataStr == null) return;
-
+    var moreInfo = [];
+    if (moreInfoStr) {
+        moreInfo = JSON.parse(moreInfoStr);
+    }
     var objArray = JSON.parse(dataStr);
     if ($.GSForm) {
-        $.GSForm.setInfoGroup(objArray, wrapId);
+        $.GSForm.setInfoGroup(objArray, wrapId, moreInfo);
     }
 }
+function setAdvanceEasyTable(dataStr, tbodyId) {
 
+    if (dataStr == null) return;
+    var objArray = JSON.parse(dataStr);
+    if ($.GSForm) {
+        $.GSForm.setAdvanceEasyTable(objArray, tbodyId);
+    }
+}
 function getTableJson(id) {
     var data = $.GSForm.getTable(id);
     var jsonstr = JSON.stringify(data);
@@ -190,7 +311,8 @@ function getTableJson(id) {
 }
 function setTableJson(dataStr, id) {
 
-    if (dataStr == null||id==null) return;
+    if (dataStr == null || id == null) return;
+
     var objArray = JSON.parse(dataStr);
     $.GSForm.setTable(objArray,id);
 
@@ -224,12 +346,14 @@ function saveTxt() {
     //window.external.saveTXT(jsonstr, DelImgPath,path);
     return jsonstr;
 }
+//输出处理过的页面源代码
 function outhtml() {
-    var s = document.documentElement.outerHTML;
+    //var s = document.documentElement.outerHTML;
+    var s = htmlHandle.outputHtml();
     return s;
 }
 function fixedPlaceholder() {
-    $('input[type="text"],textarea').textPlaceholder();
+    $('input[type="text"],textarea[placeholder]').textPlaceholder();
 }
 	 function     EditCell(ff)
 	 {
@@ -399,7 +523,7 @@ function initImages(images) {
             appendImage(divId, temp);
         }
     }
-	
+
 }
 //插入图片
 function AddImage(divId) {
@@ -499,9 +623,29 @@ function addimg(editor) {
   }
 }
 
+// 初始化和下载文件 D:/xxx/1.xls, D:/xxx/2.xml
+function initFiles(files) {
+  if (files) {
+    var filesArray = files.split(','),
+        len = filesArray.length,
+        temp = '',
+        divId = '',
+        $div = $('.js-file-list');
+      for (var i = 0; i < len; i++) {
+          temp = filesArray[i];
+          var fileName = temp.substring(temp.lastIndexOf('/') + 1)
+          $div.append('<p>' + fileName + '<button class="js-download" downloadPath="' + temp + '">下载</button></p>');
+      }
+  }
+  $(".js-download").bind('click', function() {
+    var downloadPath = $(this).attr('downloadPath');
+    window.external.DownloadFile(downloadPath);
+  });
+}
+
 $(function () {
 
-	jQuery("textarea").TextAreaExpander(72);   // textarea根据文本自动变宽
+	jQuery("textarea").TextAreaExpander(30);   // textarea根据文本自动变宽
 
 
 	/*textarea宽度调节*/
@@ -529,5 +673,53 @@ $(function () {
         $this.parent().parent().remove();
       }
     });
+
+
+    $(".js-exp-btn").bind('click', function() {
+      var $this = $(this),
+          $beforeExpDiv = $(this).parent(),
+          $afterExpDiv = $beforeExpDiv.next(),
+          format = $this.attr('format');
+      var fileValue = window.external.AddFile(format);
+      //var fileValue = 'D:/xx/xx.xls, xx.xls';
+
+      $beforeExpDiv.hide();
+      htmlFile($afterExpDiv, fileValue)
+    });
+
+    // 重新导入
+    $(".exp-group .js-reexp-btn").live('click', function() {
+      var fileValue = window.external.AddFile(format);
+      //var fileValue = 'D:/xx/xx.xls, xx1.xls';
+
+      htmlFile($(this).parent(), fileValue)
+    });
+
+    function htmlFile(element, fileValue) {
+      // <span id="file-name"></span>
+      // <button class="js-reexp-btn" type="button" name="button">重导</button>
+      // <button class="js-del-btn" type="button" name="button">删除</button>
+      if (fileValue != "") {
+        var sizeArry = fileValue.split(',');
+        var filePath = sizeArry[0]
+        var fileName = sizeArry[1];
+        $(element).html('<span id="file-name">' + fileName + '</span><button class="js-reexp-btn" type="button" name="button">重导</button><button delFilePath="' + filePath + '" class="js-del-btn" type="button" name="button">删除</button>')
+      }
+    }
+
+    // 删除
+    $(".exp-group .js-del-btn").live('click', function() {
+      var $this = $(this),
+          $afterExpDiv = $(this).parent(),
+          $beforeExpDiv = $afterExpDiv.prev();
+      var delFilePath = $(this).attr('delFilePath');
+      if(confirm('确定要删除该文件?')){
+        window.external.DeleteFile(delImgPath);
+        $beforeExpDiv.show();
+        $afterExpDiv.children().remove();
+      }
+    });
+
+
 });
 $.GSForm.autoInputWidth();

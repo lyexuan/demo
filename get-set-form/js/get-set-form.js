@@ -454,7 +454,7 @@
         		}
           	$template = $(_template);
             for(var _t in temp){
-
+              $template.find('[data-name="' + _t + '"]').text(temp[_t]);
             	$template.find('[data-name="' + _t + '"]').val(temp[_t]);
             }
             $ibody.append($template);
