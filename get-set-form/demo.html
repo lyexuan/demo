@@ -314,7 +314,12 @@
     <p>1.css</p>
     <pre>.text-placeholder{color: #aaa;}</pre>
     <p>2.js</p>
-    <pre>$('input[type="text"]').textPlaceholder();</pre>
+    <pre>$('input[type="text"],textarea[placeholder]').textPlaceholder();</pre>
+    <p class="text-danger">该方法的执行时机：</p>
+    <ul>
+      <li>通常是在$.GSForm.set()之前</li>
+      <li>如后台另外写了别的赋值方法，需要进行测试，再决定是赋值之前执行还是之后</li>
+    </ul>
 
     <h2>四、插入图片</h2>
     <p>插入图片要有一个放置图片的容器，以及一个插入图片的按钮，容器需要具备class="pictures"以及name="前缀.image"(前缀的定义和页面中的其他输入框保持一致)；插入图片按钮需要有class="btn-add-img"，以及target属性，target属性的值为图片容器的id。</p>
@@ -567,7 +572,7 @@
   		/*表格增减行操作*/
 
   		/*placeholder*/
-      $('input[type="text"],textarea').textPlaceholder();
+      $('input[type="text"],textarea[placeholder]').textPlaceholder();
   		/*placeholder*/
 
   		/*插入图片以及图片查看*/
