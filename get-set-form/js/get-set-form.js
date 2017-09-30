@@ -16,7 +16,7 @@
 				$text.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 && !$this.hasClass('text-placeholder')){
+					if( id /*&& id.indexOf('.')!==-1*/ && !$this.hasClass('text-placeholder')){
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -26,7 +26,7 @@
 					    id = $this.attr('id'),
 					    name,
 					    $radio;
-					if( id && id.indexOf('.')!==-1 ){
+					if( id /*&& id.indexOf('.')!==-1*/ ){
 						name = $this.attr('name');
 					  data.push({name: name,value: id});
 					}
@@ -35,7 +35,7 @@
 				$checkbox.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 && $this.attr('checked')){
+					if( id /*&& id.indexOf('.')!==-1*/ && $this.attr('checked')){
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -43,7 +43,7 @@
 				$select.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 ){
+					if( id /*&& id.indexOf('.')!==-1*/ ){
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -51,7 +51,7 @@
 				$textarea.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 ){
+					if( id /*&& id.indexOf('.')!==-1*/ ){
 						data.push({name: id,value: $this.val()});
 					}
 				});
@@ -59,7 +59,7 @@
 				$span.each(function(){
 					var $this = $(this),
 					    id = $this.attr('id');
-					if( id && id.indexOf('.')!==-1 ){
+					if( id /*&& id.indexOf('.')!==-1*/ ){
 						data.push({name: id,value: $this.text()});
 					}
 				});
@@ -375,7 +375,8 @@
 				    template = $wrap.find('.template').html().replace(/text-placeholder/g,'');
 
 				callback = $.extend({}, {
-        	afterAddInfoGroup: function(){}
+        	afterAddInfoGroup: function(){},
+        	afterDelInfoGroup: function(){}
         }, callback);
 
         //点击一组内容
@@ -399,6 +400,7 @@
         $btnDel.click(function(){
         	if($ibody.find('.info-item').length>1){
         		$ibody.find('.info-item:last').remove();
+        		callback.afterDelInfoGroup();
         	}
         });
 			},

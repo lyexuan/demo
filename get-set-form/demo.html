@@ -187,7 +187,13 @@
     	{"name":"test.checkbox1","value":""},
     	{"name":"test.checkbox3","value":""},
     	{"name":"test.select","value":"option2"},
-    	{"name":"test.textarea","value":"this is a textarea"}
+    	{"name":"test.textarea","value":"this is a textarea"},
+      {"name":"testtext","value":"some text"},
+      {"name":"testradio","value":"test.radio2"},
+      {"name":"testcheckbox1","value":""},
+      {"name":"testcheckbox3","value":""},
+      {"name":"testselect","value":"option2"},
+      {"name":"testtextarea","value":"this is a textarea"}
     ],
     testData2 = [
     	{"man":"x1","number":"xx1","require":"xxx1"},
@@ -226,6 +232,38 @@
 	  	textarea:
 	  	<textarea name="test.textarea" id="test.textarea" class="required body-textarea" placeholder="textarea placeholder"></textarea>
 	  </p>
+    <p>
+      text:
+      <input type="text" id="testtext" name="testtext" placeholder="测试低版本ie的placeholder" class="required">
+    </p>
+    <p>
+      text2:
+      <input type="text" id="testtext2" name="testtext2" placeholder="text2" class="required">
+    </p>
+    <p>
+      radio:
+      <input type="radio" id="testradio1" name="testradio" value="radio1" class="required">radio1
+      <input type="radio" id="testradio2" name="testradio" value="radio2" class="required">radio2
+      <input type="radio" id="testradio3" name="testradio" value="radio3" class="required">radio3
+    </p>
+    <p>
+      checkbox:
+      <input type="checkbox" id="testcheckbox1" name="testcheckbox" class="required">checkbox1
+      <input type="checkbox" id="testcheckbox2" name="testcheckbox" class="required">checkbox2
+      <input type="checkbox" id="testcheckbox3" name="testcheckbox" class="required">checkbox3
+    </p>
+    <p>
+      select:
+      <select id="testselect" name="testselect" class="required">
+        <option value="">--请选择--</option>
+        <option value="option1">option1</option>
+        <option value="option2">option2</option>
+      </select>
+    </p>
+    <p>
+      textarea:
+      <textarea name="testtextarea" id="testtextarea" class="required body-textarea" placeholder="textarea placeholder"></textarea>
+    </p>
     <p>
       span:
       <span type="input" id="test.span">有效的span</span>
@@ -470,6 +508,12 @@
     	{"name":"test.select","value":"option2"},
     	{"name":"test.textarea","value":"this is a textarea"},
       {"name":"test.span","value":"span"},
+      {"name":"testtext","value":"some text"},
+      {"name":"testradio","value":"testradio2"},
+      {"name":"testcheckbox1","value":""},
+      {"name":"testcheckbox3","value":""},
+      {"name":"testselect","value":"option2"},
+      {"name":"testtextarea","value":"this is a textarea"}
     ],
     testData2 = [
     	{"man":"x1","number":"xx1","require":"xxx1"},
