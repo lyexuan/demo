@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>hammerTest</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="utf-8">
+</head>
+<body>
+  <div style="width: 200px;height: 300px;background: #000;" id="test"></div>
+  <div id="console">
+    
+  </div>
+  <script src="hammer.min.js"></script>
+  <script>
+    var console = document.getElementById('console');
+    var test = document.getElementById('test');
+    var mc = new Hammer.Manager(test, {});
+    mc.add(new Hammer.Swipe({
+      direction: Hammer.DIRECTION_UP
+    }));
+    //var hammertime = new Hammer(document.getElementById('test'));
+    mc.on('swipe', function(ev) {
+      var node = document.createElement('p');
+      node.innerHTML = 'swipe';
+      console.appendChild(node);
+    });
+  </script>
+</body>
+</html>
