@@ -17,4 +17,5 @@
 | map-entry          | 一个用echart绘制的地图，地图的各个区域作为进入各个子系统的入口 |
 | fullscreen-test    | 一个有趣的页面，用全屏的网页来做一个视觉欺骗                 |
 | hammer-test        | 测试hammer.js，一个响应手势事件的脚本                        |
+| ebid-portal        | 电子招投标门户静态页面                                       |
 
