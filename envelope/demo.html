@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo</title>
+	<meta charset="utf-8">
+	<style>
+	  *{
+	  	box-sizing: border-box;
+	  }
+		html,body{
+			height: 100%;
+			overflow: hidden;
+			background: #333;
+			font-family: "Microsoft Yahei"
+		}
+		.e1,.e2,.e3,.e4{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -150px;
+			margin-top: -150px;
+			width: 300px;
+			height: 300px;
+			background: url("img/e1.png") no-repeat center;
+			text-align: center;
+		}
+		.e1 p{
+			padding-top: 165px;
+    	font-size: 30px;
+    	color: #333;
+		}
+		.e2{
+			background: url("img/e2.png") no-repeat center;
+		}
+		.e4{
+			background: url("img/e3.png") no-repeat center;
+		}
+		.e3{
+			width: 220px;
+	    height: 320px;
+	    margin-top: -196px;
+	    margin-left: -110px;
+	    background: transparent;
+	    background-size: contain;
+	    overflow: hidden;
+		}
+		.e3 .wrap{
+      width: 220px;
+	    height: 320px;
+	    background: #fff url(img/1.jpg) no-repeat 16px 173px;
+	    background-size: 80px 80px;
+	    position: relative;
+	    box-shadow: inset 0 0 10px #aaa;
+		}
+		.e3 .wrap p{
+			text-align: left;
+			padding: 20px 20px 0 20px;
+			line-height: 1.4;
+			color: #333;
+			margin: 0;
+			font-size: 14px;
+		}
+		.e3 .wrap p span{
+			display: block;
+			text-align: right;
+		}
+		@keyframes a1{
+			0%   {margin-top: -450px;transform: rotateY(0deg);}
+			25%  {margin-top: -150px;transform: rotateY(0deg);}
+			50%  {transform: rotateY(90deg);}
+			75%  {transform: rotateY(90deg);}
+			100% {transform: rotateY(90deg);}
+		}
+		@keyframes a2{
+			0%   {transform: rotateY(90deg);}
+			25%   {transform: rotateY(90deg);}
+			50%   {transform: rotateY(90deg);}
+			75%   {transform: rotateY(0deg);}
+			100% {transform: rotateY(0deg);}
+		}
+		@keyframes a3{
+			0%   {opacity: 0;top: 200px;}
+			25%   {opacity: 0;top: 200px;}
+			50%   {opacity: 0;top: 200px;}
+			75%   {opacity: 0;top: 200px;}
+			100% {opacity: 1;top: 0;}
+		}
+		.e1{
+			transform: rotateY(90deg);
+			animation: a1 10s;
+		}
+		.e2,.e4{
+      animation: a2 10s;
+		}
+		.e3 .wrap{
+			animation: a3 10s;
+		}
+	</style>
+</head>
+<body>
+  <div class="e1">
+  	<p>邀请函</p>
+  </div>
+  <div class="e2"></div>
+  <div class="e3">
+  	<div class="wrap">
+  		<p>
+  			你听说过柯南吗？<br>
+  			你喜欢推理吗？<br>
+  			你想成为一名小侦探吗？<br>
+  			如果想，<br>
+  			请拨打以下电话，<br>
+  			快快加入我们吧！<br>
+  			联系方式：1505963775X<br>
+  			<span>柯南侦探营</span>
+  		</p>
+  	</div>
+  </div>
+  <div class="e4"></div>
+</body>
+</html>
