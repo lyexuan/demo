@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+        .c-view-split{
+            position: relative;
+            width: 600px;
+            height: 300px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .c-view-split-panel{
+            height: 100%;
+            box-sizing: border-box;
+            min-width: 1px;
+            overflow: auto;
+        }
+        .c-view-split-panel-left{
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .c-view-split-panel-right{
+            
+        }
+        .c-view-split-control{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -5px;
+            width: 10px;
+            height: 100%;
+            background: #ddd;
+            cursor: w-resize;
+        }
+        .content{
+            padding: 10px;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="c-view-split" class="c-view-split">
+        <div id="c-view-split-panel-left" class="c-view-split-panel c-view-split-panel-left">
+            <div class="content">
+                <p>左侧面板</p>
+            </div>
+        </div>
+        <div id="c-view-split-control" class="c-view-split-control"></div>
+        <div id="c-view-split-panel-right" class="c-view-split-panel c-view-split-panel-right">
+            <div class="content">
+                <p>右侧面板</p>
+            </div>
+        </div>
+    </div>  
+    <script>
+        $(function(){
+            //左侧面板初始宽度
+            var initWidth = '50%';
+            //初始控制栏位置
+            var initClientX = 0;
+            var initLeft = 0;
+            //初始左面板宽度
+            var initLeftPanelWidth = 0;
+            //元素
+            var $e = {
+                wrap: $('#c-view-split'),
+                pl: $('#c-view-split-panel-left'),
+                pr: $('#c-view-split-panel-right'),
+                c: $('#c-view-split-control'),
+                b: $('body'),
+            };
+            //容器宽度
+            var wrapWidth = parseInt($e.wrap.css('width'));
+            //是否能够拖动的标识
+            var canDrag = false;
+
+            //初始化样式
+            $e.pl.css('width', initWidth);
+            $e.pr.css('paddingLeft', initWidth);
+
+            //给控制栏绑定事件
+            //当鼠标按下
+            $e.c.on('mousedown', function(e){
+                canDrag = true;
+                initClientX = e.clientX;
+                initLeft = parseInt($e.c.css('left'));
+                initLeftPanelWidth = parseInt($e.pl.css('width'));
+            });
+            //当鼠标移动
+            $(document).on('mousemove', function(e){
+                if(canDrag){
+                    //计算出左右偏移的值
+                    var offset = e.clientX - initClientX;
+                    //重置左右面板的宽度以及控制栏的位置
+                    //控制栏位置
+                    var newLeft = initLeft + offset;
+                    newLeft = newLeft > 0 ? newLeft : 0;
+                    $e.c.css('left', newLeft + 'px' );
+
+                    //左面板宽度
+                    var newLeftPanelWidth = initLeftPanelWidth + offset;
+                    newLeftPanelWidth = newLeftPanelWidth > 0 ? newLeftPanelWidth : 0;
+                    $e.pl.css('width', newLeftPanelWidth + 'px');
+                    $e.pr.css('paddingLeft', newLeftPanelWidth + 'px');
+                }
+            });
+            //当鼠标松开
+            $(document).on('mouseup', function(){
+                canDrag = false;
+            });
+            $(document).on('dragend', function(){
+                canDrag = false;
+            });
+        })
+    </script>  
+</body>
+</html>

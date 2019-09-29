@@ -13,4 +13,5 @@
 | envelope           | 一个用html和css制作的信封小动画                                |
 | get-set-form       | 批量处理表单值的一个小插件                                   |
 | SpaceDataIndex     | 空间资源管理系统主页面                                       |
+| view-split         | 左右div分屏demo                                       |
 
